@@ -1,8 +1,8 @@
 "use strict";
 
-import {numberOfModules} from './parameters';
+import {numberOfModules} from './parameters.js';
 
-class Module{
+class TimeModule{
     constructor(number){
     this.number = number;
     this.technicians = new Set();
@@ -10,7 +10,7 @@ class Module{
     }
 
     get numberOfTechnicians(){
-        return length(this.technicians);
+        return this.technicians.length;
     }
 
     addTechnician(technician){
@@ -34,7 +34,7 @@ export class Schedule{
     constructor(){
         this.modules = Array()
         for(let i = 0;i < numberOfModules; i++){
-            this.modules.push(new Module(i));
+            this.modules.push(new TimeModule(i));
         }
         alert("Listo");
     }
