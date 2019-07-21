@@ -32,11 +32,20 @@ class TimeModule{
 
 export class Schedule{
     constructor(){
-        this.modules = Array()
-        for(let i = 0;i < numberOfModules; i++){
-            this.modules.push(new TimeModule(i));
+        this.modules = new Set();
+    }
+
+    hasCommonModules(modules){
+        for(let i = 0; i < numberModules.length; i++){
+            if(this.modules.has(numberModules[i])){
+                return true;
+            }
         }
-        alert("Listo");
+        return false;
+    }
+
+    addModule(numberModule){
+        this.modules.add(numberModule)
     }
 
     removeModule(number){
@@ -46,4 +55,6 @@ export class Schedule{
     getModule(number){
 
     }
+
+
 }

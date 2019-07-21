@@ -1,20 +1,26 @@
 
 'use strict';
+
+import {Schedule} from './time_modules.js';
+import {BossOrganizer} from './boss.js';
+import {TechnicianOrganizer} from './technician.js';
+
 export class Organizer{
-    constructor(technicians, bosses, modules){
-        this.technicians = technicians;
-        this.bosses = bosses;
-        this.modules = modules;
+    constructor(technicians, bosses){
+        this.technicians = new TechnicianOrganizer();
+        this.bosses = new BossOrganizer;
+        this.modules = new Schedule();
     }
 
-    getBossesModules(){
-        let modulesSet = new Set();
-        for(let i = 0; i < this.bosses.length; i++){
-            let currentModules = this.bosses[i].modules;
-            for(let j = 0; j < currentModules.length; j++){
-                modulesSet.add(currentModules[j])
-            }
+    addBoss(idBoss, name, modules){
+        this.bosses.addBoss(idBoss, name, modules);
+        modules.forEach(this.modules.addModule);
+    }
+
+    addTechnician(idTechnician, name, modules){
+        if(this.modules.hasCommonModules(modules)){
+            this.technicians.addTechnician(idTechnician, name, modules);
         }
-        return modulesSet;
+        
     }
 }
