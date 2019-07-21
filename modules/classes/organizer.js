@@ -6,15 +6,17 @@ import {BossOrganizer} from './boss.js';
 import {TechnicianOrganizer} from './technician.js';
 
 export class Organizer{
-    constructor(technicians, bosses){
+    constructor(){
         this.techniciansOrg = new TechnicianOrganizer();
         this.bossesOrg = new BossOrganizer();
         this.modulesOrg = new Schedule();
     }
 
-    addBoss(idBoss, name, modules){
-        this.bossesOrg.addBoss(idBoss, name, modules);
-        modules.forEach(this.modulesOrg.addModule);
+    addBoss(idBoss, name, modules, capacity){
+        this.bossesOrg.addBoss(idBoss, name, modules, capacity);
+        for(let i = 0; i < modules.length; i++){
+            this.modulesOrg.addModule(modules[i]);
+        }
     }
 
     addTechnician(idTechnician, name, modules){
@@ -31,5 +33,4 @@ export class Organizer{
         }
     }
 
-    }
 }

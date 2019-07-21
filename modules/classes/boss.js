@@ -14,8 +14,8 @@ export class BossOrganizer{
         this.bosses = Array();
     }
 
-    addBoss(idBoss, name, modules){
-        let boss = new Boss(idBoss, name, modules);
+    addBoss(idBoss, name, modules, capacity){
+        let boss = new Boss(idBoss, name, modules, capacity);
         this.bosses.push(boss);
     }
 
