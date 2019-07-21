@@ -36,8 +36,8 @@ export class Schedule{
     }
 
     hasCommonModules(modules){
-        for(let i = 0; i < numberModules.length; i++){
-            if(this.modules.has(numberModules[i])){
+        for(let i = 0; i < modules.length; i++){
+            if(this.modules.has(modules[i])){
                 return true;
             }
         }

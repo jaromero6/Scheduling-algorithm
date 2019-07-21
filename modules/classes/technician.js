@@ -15,7 +15,9 @@ export class TechnicianOrganizer{
     addTechnician(idTechnician, name, modules){
         let technician = new Technician(idTechnician, name, modules);
         this.technicians.push(technician);
-        modules.array.forEach(this.techniciansModules.add);
+        for(let i = 0; i < modules.length; i++){
+            this.techniciansModules.add(modules[i]);
+        }
     }
 
     hasCommonModules(modules){
