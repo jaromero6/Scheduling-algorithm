@@ -5,11 +5,7 @@ class Technician{
     }
 
     getPriority(){
-        return this.modules.size;
-    }
-
-    canBeAssignedTo(module){
-        return this.modules.has(module);
+        return this.modules.length;
     }
 }
 

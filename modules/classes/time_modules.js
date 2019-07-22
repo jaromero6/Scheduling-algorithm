@@ -4,13 +4,20 @@ import {numberOfModules} from './parameters.js';
 
 class TimeModule{
     constructor(number){
-    this.number = number;
-    this.technicians = new Set();
-    this.boss = null;
+        this.number = number;
+        this.technicians = new Set();
+        this.boss = null;
+        this.capacity = numberOfModules;
+        this.potentialTechnicians = {};
+
     }
 
-    get numberOfTechnicians(){
-        return this.technicians.length;
+    numberOfTechnicianWithPriority(priority){
+        if(this.potentialTechnicians.hasOwnProperty(priority)){
+            return this.potentialTechnicians[priority].length;
+        }else{
+            return 0;
+        }
     }
    
     addTechnician(technician){
@@ -19,6 +26,15 @@ class TimeModule{
 
     removeTechnician(technician){
 
+    }
+
+    addPotentialTechnician(idTechnician, priority){
+        if(this.potentialTechnicians.hasOwnProperty(priority)){
+            this.potentialTechnicians[priority].push(idTechnician);
+        }else{
+            this.potentialTechnicians[priority] = Array();
+            this.potentialTechnicians[priority].push(idTechnician);
+        }
     }
 
     addBoss(boss){
@@ -35,6 +51,14 @@ class TimeModule{
 export class Schedule{
     constructor(){
         this.modules = new Set();
+        this.moduleNodes = {};
+    }
+    
+    removeModule(number){
+
+    }
+
+    getModule(number){
     }
 
     hasCommonModules(modules){
@@ -47,20 +71,15 @@ export class Schedule{
     }
 
     addModule(numberModule){
-        this.modules.add(numberModule)
+        this.modules.add(numberModule);
+        this.moduleNodes[numberModule] = new TimeModule(numberModule);
     }
 
     filterModules(modules){
-        return modules.filter(mod => this.modules.has(mod))
+        return modules.filter(mod => this.modules.has(mod));
     }
 
-    removeModule(number){
-
+    addPotentialTechnician(idTechnician, moduleTime, priority){
+        this.moduleNodes[moduleTime].addPotentialTechnician(idTechnician, priority);
     }
-
-    getModule(number){
-
-    }
-
-
 }

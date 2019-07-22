@@ -23,6 +23,7 @@ export class Organizer{
         if(this.modulesOrg.hasCommonModules(modules)){
             this.techniciansOrg.addTechnician(idTechnician, name, modules);
             this.filterTechniciansModules(idTechnician);
+            this.addAsPotentialTechnician(idTechnician);
         }
     }
     
@@ -43,14 +44,26 @@ export class Organizer{
     filterBossesModules(bossId){
         let filterModules = this.techniciansOrg.filterModules(
                         this.bossesOrg.bosses[bossId].modules);
-        this.bossesOrg.bosses[bossId].modules = new Set(filterModules);
+        this.bossesOrg.bosses[bossId].modules = filterModules;
     
     }
 
     filterTechniciansModules(technician){
             let filterModules = this.modulesOrg.filterModules(
                 this.techniciansOrg.technicians[technician].modules);
-            this.techniciansOrg.technicians[technician].modules = new Set(filterModules);
+            this.techniciansOrg.technicians[technician].modules = filterModules;
     }
+
+
+    addAsPotentialTechnician(idTechnician){
+        let technician = this.techniciansOrg.technicians[idTechnician];
+        let priority = technician.getPriority();
+        for(let i = 0;i < technician.modules.length;i++){
+            let timeModule = technician.modules[i];
+            this.modulesOrg.addPotentialTechnician(idTechnician, timeModule, priority);
+        }
+    }
+
+   
 }
 
