@@ -3,6 +3,14 @@ class Technician{
         this.name = name;
         this.modules = modules;     
     }
+
+    getPriority(){
+        return this.modules.size;
+    }
+
+    canBeAssignedTo(module){
+        return this.modules.has(module);
+    }
 }
 
 export class TechnicianOrganizer{

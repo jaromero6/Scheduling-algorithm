@@ -43,14 +43,14 @@ export class Organizer{
     filterBossesModules(bossId){
         let filterModules = this.techniciansOrg.filterModules(
                         this.bossesOrg.bosses[bossId].modules);
-        this.bossesOrg.bosses[bossId].modules = filterModules;
+        this.bossesOrg.bosses[bossId].modules = new Set(filterModules);
     
     }
 
     filterTechniciansModules(technician){
             let filterModules = this.modulesOrg.filterModules(
                 this.techniciansOrg.technicians[technician].modules);
-            this.techniciansOrg.technicians[technician].modules = filterModules;
+            this.techniciansOrg.technicians[technician].modules = new Set(filterModules);
     }
 }
 
