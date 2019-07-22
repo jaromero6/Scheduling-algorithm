@@ -102,9 +102,9 @@ export class Schedule{
         let maxValue = 0;
         for(let i = 0; i < modules.length; i++){
             let moduleIndex = modules[i];
-            if(this.moduleNodes[moduleIndex].techniciansWithPriority(priority) > maxValue){
+            if(this.moduleNodes[moduleIndex].hasTechniciansWithPriority(priority) > maxValue){
                 maxModule = moduleIndex;
-                maxValue = this.moduleNodes[moduleIndex].techniciansWithPriority(priority);
+                maxValue = this.moduleNodes[moduleIndex].hasTechniciansWithPriority(priority);
             }
         }
         return maxModule;
@@ -115,7 +115,6 @@ export class Schedule{
         for(let x in this.moduleNodes){
             if(this.moduleNodes.hasOwnProperty(x)){
                 if(this.moduleNodes[x].hasTechniciansWithPriority(priority)){
-                    console.log(x,this.moduleNodes[x].hasTechniciansWithPriority(priority));
                     modulesWithPriority.push(parseInt(x));
                 }
             }

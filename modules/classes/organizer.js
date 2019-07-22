@@ -70,9 +70,8 @@ export class Organizer{
             modules = this.modulesOrg.getModulesByPriority(currentPriority);
             currentPriority += 1;
         }
-        return modules;
+        return this.modulesOrg.getModuleWithMostTechnicians(modules, currentPriority - 1);
     }
-
 
    
 }
