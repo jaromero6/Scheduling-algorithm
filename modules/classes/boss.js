@@ -1,25 +1,23 @@
 class Boss{
-    constructor(idBoss, name, modules, capacity){
-        this.idBoss = idBoss;
+    constructor(name, modules, capacity){
         this.name = name;
         this.modules = modules;
         this.maxModules = capacity;
         this.assigned_modules = Array();
-        this.available = true
     }
 }
 
 export class BossOrganizer{
     constructor(){
-        this.bosses = Array();
+        this.bosses = {};
     }
 
     addBoss(idBoss, name, modules, capacity){
-        let boss = new Boss(idBoss, name, modules, capacity);
-        this.bosses.push(boss);
+        let boss = new Boss(name, modules, capacity);
+        this.bosses[idBoss] = boss;
     }
 
     unableBoss(numberOfBoss){
-        this.bosses[numberOfBoss].available = false;
+        delete this.bosses[numberOfBoss];
     }
 }

@@ -26,11 +26,14 @@ export class Organizer{
     }
 
     removeRedundantBosses(){
-        for(let x = 0; x < this.techniciansOrg.bosses.length;x++){
-            if(! this.techniciansOrg.hasCommonModules(this.bossesOrg.bosses[x])){
-                this.bossesOrg.unableBoss(x);
+        for(let x in this.bossesOrg.bosses){
+            if(this.bossesOrg.bosses.hasOwnProperty(x)){
+                let bossModules = this.bossesOrg.bosses[x].modules;
+                if(! this.techniciansOrg.hasCommonModules(bossModules)){
+                    this.bossesOrg.unableBoss(x);
+                }
             }
         }
     }
-
 }
+

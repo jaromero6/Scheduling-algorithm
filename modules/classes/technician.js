@@ -1,6 +1,5 @@
 class Technician{
-    constructor(idTechnician, name, modules){
-        this.idTechnician = idTechnician;
+    constructor(name, modules){
         this.name = name;
         this.modules = modules;     
     }
@@ -8,13 +7,13 @@ class Technician{
 
 export class TechnicianOrganizer{
     constructor(){
-        this.technicians = Array();
+        this.technicians = {};
         this.techniciansModules = new Set();
     }
 
     addTechnician(idTechnician, name, modules){
-        let technician = new Technician(idTechnician, name, modules);
-        this.technicians.push(technician);
+        let technician = new Technician(name, modules);
+        this.technicians[idTechnician] = technician;
         for(let i = 0; i < modules.length; i++){
             this.techniciansModules.add(modules[i]);
         }
