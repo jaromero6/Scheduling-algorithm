@@ -63,6 +63,16 @@ export class Organizer{
             this.modulesOrg.addPotentialTechnician(idTechnician, timeModule, priority);
         }
     }
+    getRestrictiveModule(){
+        let currentPriority = 1
+        let modules = Array();
+        while(! modules.length){
+            modules = this.modulesOrg.getModulesByPriority(currentPriority);
+            currentPriority += 1;
+        }
+        return modules;
+    }
+
 
    
 }

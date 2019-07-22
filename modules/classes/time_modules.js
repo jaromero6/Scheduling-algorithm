@@ -12,7 +12,7 @@ class TimeModule{
 
     }
 
-    numberOfTechnicianWithPriority(priority){
+    techniciansWithPriority(priority){
         if(this.potentialTechnicians.hasOwnProperty(priority)){
             return this.potentialTechnicians[priority].length;
         }else{
@@ -35,6 +35,20 @@ class TimeModule{
             this.potentialTechnicians[priority] = Array();
             this.potentialTechnicians[priority].push(idTechnician);
         }
+    }
+
+
+    getModuleWithMostTechnicians(modules, priority){
+        let maxModule = 0;
+        let maxValue = 0;
+        for(let i = 0; i < modules.length; i++){
+            moduleIndex = modules[i];
+            if(this.moduleNodes[moduleIndex].techniciansWithPriority(priority) > maxValue){
+                maxModule = moduleIndex;
+                maxValue = this.moduleNodes[moduleIndex].techniciansWithPriority(priority);
+            }
+        }
+        return maxModule;
     }
 
     addBoss(boss){
@@ -81,5 +95,31 @@ export class Schedule{
 
     addPotentialTechnician(idTechnician, moduleTime, priority){
         this.moduleNodes[moduleTime].addPotentialTechnician(idTechnician, priority);
+    }
+
+    getModulesByPriority(priority){
+        let restrictiveModules = Array();
+        for(let x in this.moduleNodes){
+            if(this.moduleNodes.hasOwnProperty(x)){
+                let currentModule = this.moduleNodes[x];
+                if(currentModule.techniciansWithPriority(priority)){
+                    restrictiveModules.push(parseInt(x));
+                }
+            }
+        }
+        return restrictiveModules;
+    }
+
+    getModuleWithMostTechnicians(modules, priority){
+        let maxModule = 0;
+        let maxValue = 0;
+        for(let i = 0; i < modules.length; i++){
+            let moduleIndex = modules[i];
+            if(this.moduleNodes[moduleIndex].techniciansWithPriority(priority) > maxValue){
+                maxModule = moduleIndex;
+                maxValue = this.moduleNodes[moduleIndex].techniciansWithPriority(priority);
+            }
+        }
+        return maxModule;
     }
 }
