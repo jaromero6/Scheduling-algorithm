@@ -19,5 +19,8 @@ export async function createOrganizer(bosses, technicians){
     }
     organizer.removeRedundantBosses();
     return organizer;
+}
 
+export async function assignTehnicians(organizer){
+    
 }

@@ -12,7 +12,7 @@ class TimeModule{
     get numberOfTechnicians(){
         return this.technicians.length;
     }
-
+   
     addTechnician(technician){
 
     }
@@ -28,6 +28,8 @@ class TimeModule{
     removeBoss(boss){
 
     }
+
+    
 }
 
 export class Schedule{
@@ -46,6 +48,10 @@ export class Schedule{
 
     addModule(numberModule){
         this.modules.add(numberModule)
+    }
+
+    filterModules(modules){
+        return modules.filter(mod => this.modules.has(mod))
     }
 
     removeModule(number){

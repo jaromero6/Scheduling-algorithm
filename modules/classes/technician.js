@@ -27,5 +27,9 @@ export class TechnicianOrganizer{
         }
         return false;
     }
+
+    filterModules(modules){
+        return modules.filter(mod => this.techniciansModules.has(mod));
+    }
 }
 
