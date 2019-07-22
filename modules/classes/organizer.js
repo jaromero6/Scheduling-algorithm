@@ -60,13 +60,13 @@ export class Organizer{
         let priority = technician.getPriority();
         for(let i = 0;i < technician.modules.length;i++){
             let timeModule = technician.modules[i];
-            this.modulesOrg.addPotentialTechnician(idTechnician, timeModule, priority);
+            this.modulesOrg.addPotentialTechnician(technician, timeModule, priority);
         }
     }
     getRestrictiveModule(){
         let currentPriority = 1
         let modules = Array();
-        while(! modules.length){
+        while(!modules.length){
             modules = this.modulesOrg.getModulesByPriority(currentPriority);
             currentPriority += 1;
         }

@@ -12,11 +12,11 @@ class TimeModule{
 
     }
 
-    techniciansWithPriority(priority){
+    hasTechniciansWithPriority(priority){
         if(this.potentialTechnicians.hasOwnProperty(priority)){
-            return this.potentialTechnicians[priority].length;
+            return this.potentialTechnicians[priority].length > 0;
         }else{
-            return 0;
+            return false;
         }
     }
    
@@ -28,12 +28,12 @@ class TimeModule{
 
     }
 
-    addPotentialTechnician(idTechnician, priority){
+    addPotentialTechnician(technician, priority){
         if(this.potentialTechnicians.hasOwnProperty(priority)){
-            this.potentialTechnicians[priority].push(idTechnician);
+            this.potentialTechnicians[priority].push(technician);
         }else{
             this.potentialTechnicians[priority] = Array();
-            this.potentialTechnicians[priority].push(idTechnician);
+            this.potentialTechnicians[priority].push(technician);
         }
     }
 
@@ -93,21 +93,8 @@ export class Schedule{
         return modules.filter(mod => this.modules.has(mod));
     }
 
-    addPotentialTechnician(idTechnician, moduleTime, priority){
-        this.moduleNodes[moduleTime].addPotentialTechnician(idTechnician, priority);
-    }
-
-    getModulesByPriority(priority){
-        let restrictiveModules = Array();
-        for(let x in this.moduleNodes){
-            if(this.moduleNodes.hasOwnProperty(x)){
-                let currentModule = this.moduleNodes[x];
-                if(currentModule.techniciansWithPriority(priority)){
-                    restrictiveModules.push(parseInt(x));
-                }
-            }
-        }
-        return restrictiveModules;
+    addPotentialTechnician(technician, moduleTime, priority){
+        this.moduleNodes[moduleTime].addPotentialTechnician(technician, priority);
     }
 
     getModuleWithMostTechnicians(modules, priority){
@@ -121,5 +108,18 @@ export class Schedule{
             }
         }
         return maxModule;
+    }
+
+    getModulesByPriority(priority){
+        let modulesWithPriority = Array();
+        for(let x in this.moduleNodes){
+            if(this.moduleNodes.hasOwnProperty(x)){
+                if(this.moduleNodes[x].hasTechniciansWithPriority(priority)){
+                    console.log(x,this.moduleNodes[x].hasTechniciansWithPriority(priority));
+                    modulesWithPriority.push(parseInt(x));
+                }
+            }
+        }
+        return modulesWithPriority;
     }
 }
