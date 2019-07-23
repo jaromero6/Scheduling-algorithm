@@ -2,7 +2,8 @@ class Technician{
     constructor(idTechnician, name, modules){
         this.idTechnician = idTechnician;
         this.name = name;
-        this.modules = modules;     
+        this.modules = modules;
+        this.isAssigned = false;   
     }
 
     getPriority(){
@@ -51,6 +52,29 @@ export class TechnicianOrganizer{
                 this.technicians[x].removeModule(numberOfModule);
             }
         }
+    }
+
+    updateAvailableTechnicians(){
+        let toRemove = Array();
+        for(let x in this.technicians){
+            if(this.technicians[x].isAssigned){
+                toRemove.push(x);
+            }
+        }
+        for(let i = 0; i < toRemove.length; i){
+            delete this.technicians[toRemove[i]];
+        }
+    }
+
+    hasAvailableTechnicians(){
+        for(let x in this.technicians){
+            if(this.technicians.hasOwnProperty(x)){
+                if(!this.technicians[x].isAssigned){
+                    return true;
+                }
+            }
+        }
+    return false;
     }
 }
 

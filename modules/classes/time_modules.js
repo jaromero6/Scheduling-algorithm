@@ -27,7 +27,6 @@ class TimeModule{
     assignTechnicians(){
         let currentPriority = 1;
         while(!isEmpty(this.potentialTechnicians) && !this.isFullModule()){
-            console.log(this.potentialTechnicians);
             while(this.hasTechniciansWithPriority(currentPriority)){
                 this.addTechnician(currentPriority);
             }
@@ -42,6 +41,7 @@ class TimeModule{
         if(!this.hasTechniciansWithPriority(currentPriority)){
             delete this.potentialTechnicians[currentPriority];
         }
+        toAssign.isAssigned = true;
 
     }
 
@@ -103,13 +103,6 @@ export class Schedule{
         this.modules = new Set();
         this.moduleNodes = {};
         this.doneModules = {};
-    }
-    
-    removeModule(number){
-
-    }
-
-    getModule(number){
     }
 
     hasCommonModules(modules){
@@ -176,5 +169,23 @@ export class Schedule{
         }
         this.doneModules[numberOfModule] = currentModule;
         delete this.moduleNodes[numberOfModule];
+    }
+
+    filterFeasibleModules(){
+        let toRemove = Array();
+        for(let x in this.moduleNodes){
+            if(this.moduleNodes.hasOwnProperty(x)){
+                if(isEmpty(this.moduleNodes[x].potentialTechnicians)){
+                    toRemove.push(x);
+                }
+            }
+        }
+        for(let i = 0;i < toRemove.length;i++){
+            delete this.moduleNodes[toRemove[i]];
+        }
+    }
+
+    hasAvailableModules(){
+        return !isEmpty(this.moduleNodes);
     }
 }

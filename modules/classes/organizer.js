@@ -41,6 +41,10 @@ export class Organizer{
         }
     }
 
+    updateModules(){
+        this.modulesOrg.filterFeasibleModules();
+    }
+
     filterBossesModules(bossId){
         let filterModules = this.techniciansOrg.filterModules(
                         this.bossesOrg.bosses[bossId].modules);
@@ -79,7 +83,11 @@ export class Organizer{
     }
 
     asignAllTechnicians(){
-        
+        while(this.modulesOrg.hasAvailableModules() && 
+              this.techniciansOrg.hasAvailableTechnicians()){
+                let moduleRestrictive = result.getRestrictiveModule();
+                result.assignToModule(moduleRestrictive);
+        }
     }
 
    
