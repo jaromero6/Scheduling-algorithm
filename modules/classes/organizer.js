@@ -75,6 +75,7 @@ export class Organizer{
 
     assignToModule(numberModule){
         this.modulesOrg.assignToModule(numberModule);
+        this.techniciansOrg.removeModule(numberModule);
     }
 
     asignAllTechnicians(){

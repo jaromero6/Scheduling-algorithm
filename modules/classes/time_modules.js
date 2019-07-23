@@ -27,9 +27,9 @@ class TimeModule{
     assignTechnicians(){
         let currentPriority = 1;
         while(!isEmpty(this.potentialTechnicians) && !this.isFullModule()){
+            console.log(this.potentialTechnicians);
             while(this.hasTechniciansWithPriority(currentPriority)){
                 this.addTechnician(currentPriority);
-                this.checkConmutability(currentPriority);
             }
             currentPriority++;
         }
@@ -37,13 +37,18 @@ class TimeModule{
    
     addTechnician(currentPriority){
         let toAssign = this.potentialTechnicians[currentPriority].pop();
-        this.assinedTechnicians.push(toAssign);
+        this.assignedTechnicians.push(toAssign);
+        this.checkConmutability(currentPriority, toAssign);
+        if(!this.hasTechniciansWithPriority(currentPriority)){
+            delete this.potentialTechnicians[currentPriority];
+        }
 
     }
 
-    checkConmutability(currentPriority){
+
+    checkConmutability(currentPriority, assigned){
         if(this.isFullModule() && this.hasTechniciansWithPriority(currentPriority)){
-            toAssign.addConmutationWith(this.potentialTechnicians[currentPriority]);
+            assigned.addConmutationWith(this.potentialTechnicians[currentPriority]);
         }
     }
 
@@ -62,11 +67,10 @@ class TimeModule{
 
     removePotentialTechnician(technician){
         let priority = technician.getPriority();
-        for(let i = 0; i < this.potentialTechnicians[priority].length; i++){ 
-            if ( this.potentialTechnicians[i].idTechnician === technician.idTechnician) {
-              this.potentialTechnicians.splice(i, 1); 
-            }
-         }
+        this.potentialTechnicians[priority] = this.potentialTechnicians[priority].filter(techn => techn.idTechnician != technician.idTechnician);
+        if(!this.potentialTechnicians[priority].length){
+            delete this.potentialTechnicians[priority];
+        }
     }
 
 
@@ -155,36 +159,20 @@ export class Schedule{
         return modulesWithPriority;
     }
 
-    removeTechniciansAsPotential(technician){
+    removeTechniciansAsPotential(technician, numberOfModule){
         for(let i = 0; i < technician.modules.length; i++){
-            currentModule = technician.modules[i];
-            this.moduleNode[currentModule].removePotentialTechnician(technician);
-
-        }
-    }
-
-    removeModuleOfTechnicians(moduleNode){
-        for(let x in moduleNode.potentialTechnicians){
-            if(moduleNode.potentialTechnicians.hasOwnProperty(x)){
-                currentTechnicians = moduleNode.potentialTechnicians[x];
-                for(let i = 0; i < currentTechnicians; i++){
-                    currentTechnicians[i].removeModule(moduleNode.number);
-                }
+            let currentModule = technician.modules[i];
+            if(currentModule != numberOfModule){
+                this.moduleNodes[currentModule].removePotentialTechnician(technician);
             }
         }
-
-
-
     }
 
     assignToModule(numberOfModule){
-        let currentModule = this.modulesNodes[numberOfModule];
+        let currentModule = this.moduleNodes[numberOfModule];
         currentModule.assignTechnicians();
-        for(let i = 0; i < currentModule.assignedTechnicians; i++){
-            this.removeTechniciansAsPotential(currentModule.assignTechnicians[i]);
-        }
-        if(! isEmpty(currentModule.potentialTechnicians)){
-            this.removeModuleOfTechnicians();
+        for(let i = 0; i < currentModule.assignedTechnicians.length; i++){
+            this.removeTechniciansAsPotential(currentModule.assignedTechnicians[i], numberOfModule);
         }
         this.doneModules[numberOfModule] = currentModule;
         delete this.moduleNodes[numberOfModule];

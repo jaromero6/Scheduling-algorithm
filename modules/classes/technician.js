@@ -10,16 +10,12 @@ class Technician{
     }
     
     removeModule(numberOfModule){
-        for(let i = 0; i < this.modules.length; i++){ 
-            if ( this.modules[i] === numberOfModule) {
-              this.modules.splice(i, 1); 
+        this.modules = this.modules.filter(value => value != numberOfModule);
     }
 
     addConmutationWith(technicians){
 
-    }
-
-    
+    }    
 }
 
 export class TechnicianOrganizer{
@@ -47,6 +43,14 @@ export class TechnicianOrganizer{
 
     filterModules(modules){
         return modules.filter(mod => this.techniciansModules.has(mod));
+    }
+
+    removeModule(numberOfModule){
+        for(let x in this.technicians){
+            if(this.technicians.hasOwnProperty(x)){
+                this.technicians[x].removeModule(numberOfModule);
+            }
+        }
     }
 }
 
