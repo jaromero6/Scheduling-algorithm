@@ -1,5 +1,6 @@
 class Technician{
-    constructor(name, modules){
+    constructor(idTechnician, name, modules){
+        this.idTechnician = idTechnician;
         this.name = name;
         this.modules = modules;     
     }
@@ -7,6 +8,18 @@ class Technician{
     getPriority(){
         return this.modules.length;
     }
+    
+    removeModule(numberOfModule){
+        for(let i = 0; i < this.modules.length; i++){ 
+            if ( this.modules[i] === numberOfModule) {
+              this.modules.splice(i, 1); 
+    }
+
+    addConmutationWith(technicians){
+
+    }
+
+    
 }
 
 export class TechnicianOrganizer{
@@ -16,7 +29,7 @@ export class TechnicianOrganizer{
     }
 
     addTechnician(idTechnician, name, modules){
-        let technician = new Technician(name, modules);
+        let technician = new Technician(idTechnician, name, modules);
         this.technicians[idTechnician] = technician;
         for(let i = 0; i < modules.length; i++){
             this.techniciansModules.add(modules[i]);

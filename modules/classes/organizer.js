@@ -73,6 +73,14 @@ export class Organizer{
         return this.modulesOrg.getModuleWithMostTechnicians(modules, currentPriority - 1);
     }
 
+    assignToModule(numberModule){
+        this.modulesOrg.assignToModule(numberModule);
+    }
+
+    asignAllTechnicians(){
+        
+    }
+
    
 }
 

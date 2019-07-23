@@ -1,5 +1,5 @@
 class Boss{
-    constructor(name, modules, capacity){
+    constructor(idBoss, name, modules, capacity){
         this.name = name;
         this.modules = modules;
         this.maxModules = capacity;
@@ -13,7 +13,7 @@ export class BossOrganizer{
     }
 
     addBoss(idBoss, name, modules, capacity){
-        let boss = new Boss(name, modules, capacity);
+        let boss = new Boss(idBoss, name, modules, capacity);
         this.bosses[idBoss] = boss;
     }
 
