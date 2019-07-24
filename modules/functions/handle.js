@@ -22,10 +22,30 @@ export async function createOrganizer(bosses, technicians){
     return organizer;
 }
 
-function addTechniciansRestrictions(restrictions, organizer){
-    organizer.addDefaultTechnicians(restrictions["technician_modules"]);
-    organizer.changeTechniciansModules(restrictions["technician_new_modules"]);
+function changeTechnicianModules(technicians, restrictions){
+    for(let i = 0; i < restrictions.length; i++){
+        idTechnician = restrictions[i]["idTechnician"];
+        modules = restrictions[i]["modules"];
+        for(let j = 0; j < technicians.length; j++){
+            if(technicians[j]["idTechnician"] === idTechnician){
+                technicians[j]["modules"] = modules;
+            }
+        }
+    }
 }
+
+function addDefaultModules(technicians, restrictions){
+    for(let i = 0; i < restrictions.length; i++){
+        idTechnician = restrictions[i]["idTechnician"];
+        module = Array(restrictions[i]["module"]);
+        for(let j = 0; j < technicians.length; j++){
+            if(technicians[j]["idTechnician"] === idTechnician){
+                technicians[j]["modules"] = modules;
+            }
+        }
+    }
+}
+
 
 export async function assignTehnicians(organizer){
     
