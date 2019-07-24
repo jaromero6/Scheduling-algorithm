@@ -22,6 +22,11 @@ export async function createOrganizer(bosses, technicians){
     return organizer;
 }
 
+function addTechniciansRestrictions(restrictions, organizer){
+    organizer.addDefaultTechnicians(restrictions["technician_modules"]);
+    organizer.changeTechniciansModules(restrictions["technician_new_modules"]);
+}
+
 export async function assignTehnicians(organizer){
     
 }

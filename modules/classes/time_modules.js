@@ -74,6 +74,16 @@ class TimeModule{
 
     }
 
+    addDefaultTechnician(technician){
+        if(!this.isFullModule()){
+            priority = technician.getPriority();
+            this.potentialTechnicians[priority] = this.potentialTechnicians[priority].filter(
+            techn => techn.idTechnician != technician.idTechnician);
+            technician.isAssigned = true;
+            this.assignedTechnicians.push(technician);
+        }
+    }
+
     addPotentialTechnician(technician, priority){
         if(this.potentialTechnicians.hasOwnProperty(priority)){
             this.potentialTechnicians[priority].push(technician);
@@ -232,6 +242,14 @@ export class Schedule{
             }
         }
         return false;
+    }
+
+    addDefaultTechnician(technician, moduleNumber){
+        this.moduleNodes[moduleNumber].addDefaultTechnician(technician);
+        if(this.moduleNodes[moduleNumber].isFullModule()){
+            this.doneModules[x] = this.moduleNodes[moduleNumber];
+            delete this.moduleNodes[moduleNumber];
+        }
     }
 
     checkConmutabilitywithBoss(boss){
