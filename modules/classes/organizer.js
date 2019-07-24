@@ -91,6 +91,7 @@ export class Organizer{
 
     getModuleWithMostAssignedTechnicians(){
         let moduleSelected = this.modulesOrg.getModuleWithMostAssignedTechnicians();
+        let bossToAssign = this.bossesOrg.getBossToAssign(moduleSelected);
         
     }
 
