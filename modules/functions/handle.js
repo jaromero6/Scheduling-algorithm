@@ -18,6 +18,43 @@ export async function createOrganizer(bosses, technicians){
         organizer.addTechnician(idTehnician, name, modules);
     }
     organizer.removeRedundantBosses();
+    organizer.updateModules();
     return organizer;
+}
 
+export function receiveData(technicians, bosses, restrictions){
+    changeModules(technicians, restrictions["technician_new_modules"]);
+    changeModules(bosses, restrictions["bosses_new_modules"]);
+    addDefaultModules(technicians, restrictions["technicians_modules"]);
+    addDefaultModules(bosses, restrictions["bosses_modules"]);
+
+}
+
+function addDefaultModules(technicians, restrictions){
+    for(let i = 0; i < restrictions.length; i++){
+        idEntity = restrictions[i]["id"];
+        module = Array(restrictions[i]["module"]);
+        for(let j = 0; j < technicians.length; j++){
+            if(technicians[j]["idTechnician"] === idEntity){
+                technicians[j]["modules"] = modules;
+            }
+        }
+    }
+}
+
+function changeModules(entities, restrictions){
+    for(let i = 0; i < restrictions.length; i++){
+        idEntity = restrictions[i]["id"];
+        modules = restrictions[i]["modules"];
+        for(let j = 0; j < entities.length; j++){
+            if(entities[j]["id"] === idEntity){
+                entities[j]["modules"] = modules;
+            }
+        }
+    }
+}
+
+
+export async function assignTehnicians(organizer){
+    
 }
