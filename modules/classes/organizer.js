@@ -40,19 +40,6 @@ export class Organizer{
         }
     }
 
-    addDefaultTechnicians(defaultTechnicians){
-        cannotBeAdded = Array();
-        for(let i = 0; i < defaultTechnicians.length; i++){
-            element = defaultTechnicians[i];
-            technician = this.techniciansOrg.technicians[element[0]];
-            this.modulesOrg.addDefaultTechnician(technician, element[1]);
-        }
-
-    }
-
-    addDefaultBosses(defaultBosses){
-
-    }
 
     updateModules(){
         this.modulesOrg.filterFeasibleModules();
