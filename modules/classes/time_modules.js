@@ -12,6 +12,10 @@ class TimeModule{
 
     }
 
+    hasPotentialTehnicians(){
+        return !isEmpty(this.potentialTechnicians);
+    }
+
     hasTechniciansWithPriority(priority){
         if(this.potentialTechnicians.hasOwnProperty(priority)){
             return this.potentialTechnicians[priority].length > 0;
@@ -26,7 +30,7 @@ class TimeModule{
 
     assignTechnicians(){
         let currentPriority = 1;
-        while(!isEmpty(this.potentialTechnicians) && !this.isFullModule()){
+        while(this.hasPotentialTehnicians() && !this.isFullModule()){
             while(this.hasTechniciansWithPriority(currentPriority)){
                 this.addTechnician(currentPriority);
             }
@@ -42,7 +46,6 @@ class TimeModule{
             delete this.potentialTechnicians[currentPriority];
         }
         toAssign.isAssigned = true;
-
     }
 
 

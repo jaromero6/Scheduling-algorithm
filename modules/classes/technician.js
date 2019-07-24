@@ -6,6 +6,15 @@ class Technician{
         this.isAssigned = false;   
     }
 
+    isAvailable(){
+        if(!this.isAssigned){
+            if(this.modules.length){
+                return true;
+            }
+        }
+        return false;
+    }
+
     getPriority(){
         return this.modules.length;
     }
@@ -69,7 +78,7 @@ export class TechnicianOrganizer{
     hasAvailableTechnicians(){
         for(let x in this.technicians){
             if(this.technicians.hasOwnProperty(x)){
-                if(!this.technicians[x].isAssigned){
+                if(this.technicians[x].isAvailable()){
                     return true;
                 }
             }

@@ -82,14 +82,11 @@ export class Organizer{
         this.techniciansOrg.removeModule(numberModule);
     }
 
-    asignAllTechnicians(){
-        while(this.modulesOrg.hasAvailableModules() && 
-              this.techniciansOrg.hasAvailableTechnicians()){
-                let moduleRestrictive = result.getRestrictiveModule();
-                result.assignToModule(moduleRestrictive);
+    assignAllTechnicians(){
+        while(this.modulesOrg.hasAvailableModules() && this.techniciansOrg.hasAvailableTechnicians()){
+                let moduleRestrictive = this.getRestrictiveModule();
+                this.assignToModule(moduleRestrictive);
         }
-    }
-
-   
+    }   
 }
 
