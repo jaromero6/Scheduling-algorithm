@@ -8,7 +8,7 @@ class TimeModule{
         this.assignedTechnicians = Array();
         this.boss = null;
         this.conmutableWith = Array();
-        this.capacity = 1;
+        this.capacity = capacity;
         this.potentialTechnicians = {};
 
     }
