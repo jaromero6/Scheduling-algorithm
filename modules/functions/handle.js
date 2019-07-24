@@ -46,6 +46,18 @@ function addDefaultModules(technicians, restrictions){
     }
 }
 
+function changeModules(entities, restrictions){
+    for(let i = 0; i < restrictions.length; i++){
+        idEntity = restrictions[i]["id"];
+        modules = restrictions[i]["modules"];
+        for(let j = 0; j < entities.length; j++){
+            if(entities[j]["id"] === idEntity){
+                entities[j]["modules"] = modules;
+            }
+        }
+    }
+}
+
 
 export async function assignTehnicians(organizer){
     
