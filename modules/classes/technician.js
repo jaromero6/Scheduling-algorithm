@@ -3,7 +3,8 @@ class Technician{
         this.idTechnician = idTechnician;
         this.name = name;
         this.modules = modules;
-        this.isAssigned = false;   
+        this.isAssigned = false;
+        this.canConmutateWith = Array();  
     }
 
     isAvailable(){
@@ -24,6 +25,10 @@ class Technician{
     }
 
     addConmutationWith(technicians){
+        for(let i = 0; i < technicians.length; i++){
+            this.canConmutateWith.push(technicians[i].idTechnician);
+        }
+
 
     }    
 }
