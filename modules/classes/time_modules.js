@@ -1,6 +1,6 @@
 "use strict";
 
-import {numberOfModules} from './parameters.js';
+import {numberOfModules, capacity} from './parameters.js';
 import {isEmpty} from '../functions/helpers.js';
 class TimeModule{
     constructor(number){
@@ -8,7 +8,7 @@ class TimeModule{
         this.assignedTechnicians = Array();
         this.boss = null;
         this.conmutableWith = Array();
-        this.capacity = numberOfModules;
+        this.capacity = 1;
         this.potentialTechnicians = {};
 
     }
@@ -33,27 +33,34 @@ class TimeModule{
     }
 
     isFullModule(){
-        return this.assignTechnicians.length >= this.capacity;
+        return this.assignedTechnicians.length >= this.capacity;
     }
 
     assignTechnicians(){
         let currentPriority = 1;
         while(this.hasPotentialTehnicians() && !this.isFullModule()){
             while(this.hasTechniciansWithPriority(currentPriority)){
-                this.addTechnician(currentPriority);
+                let result  = this.addTechnician(currentPriority);
+                if(!result){
+                    break;
+                }
             }
             currentPriority++;
         }
     }
    
     addTechnician(currentPriority){
-        let toAssign = this.potentialTechnicians[currentPriority].pop();
-        this.assignedTechnicians.push(toAssign);
-        this.checkConmutability(currentPriority, toAssign);
-        if(!this.hasTechniciansWithPriority(currentPriority)){
-            delete this.potentialTechnicians[currentPriority];
+        if(!this.isFullModule()){
+            let toAssign = this.potentialTechnicians[currentPriority].pop();
+            this.assignedTechnicians.push(toAssign);
+            this.checkConmutability(currentPriority, toAssign);
+            if(!this.hasTechniciansWithPriority(currentPriority)){
+                delete this.potentialTechnicians[currentPriority];
+            }
+            toAssign.isAssigned = true;
+            return true;
         }
-        toAssign.isAssigned = true;
+        return false;
     }
 
 
