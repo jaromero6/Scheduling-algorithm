@@ -112,5 +112,18 @@ export class Organizer{
             }
         }
     }
+
+    optimize(){
+        this.assignAllTechnicians();
+        this.assignAllBosses();
+    }
+
+    getResult(){
+        let result = {};
+        result['technicians'] = this.techniciansOrg.technicians;
+        result['modules'] = this.modulesOrg.doneModules;
+        result['bosses'] = this.bossesOrg.bosses;
+        return result;
+    }
 }
 
