@@ -1,8 +1,31 @@
 class Technician{
-    constructor(name, modules){
+    constructor(idTechnician, name, modules){
+        this.idTechnician = idTechnician;
         this.name = name;
-        this.modules = modules;     
+        this.modules = modules;
+        this.isAssigned = false;   
     }
+
+    isAvailable(){
+        if(!this.isAssigned){
+            if(this.modules.length){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getPriority(){
+        return this.modules.length;
+    }
+    
+    removeModule(numberOfModule){
+        this.modules = this.modules.filter(value => value != numberOfModule);
+    }
+
+    addConmutationWith(technicians){
+
+    }    
 }
 
 export class TechnicianOrganizer{
@@ -12,7 +35,7 @@ export class TechnicianOrganizer{
     }
 
     addTechnician(idTechnician, name, modules){
-        let technician = new Technician(name, modules);
+        let technician = new Technician(idTechnician, name, modules);
         this.technicians[idTechnician] = technician;
         for(let i = 0; i < modules.length; i++){
             this.techniciansModules.add(modules[i]);
@@ -26,6 +49,41 @@ export class TechnicianOrganizer{
             }
         }
         return false;
+    }
+
+    filterModules(modules){
+        return modules.filter(mod => this.techniciansModules.has(mod));
+    }
+
+    removeModule(numberOfModule){
+        for(let x in this.technicians){
+            if(this.technicians.hasOwnProperty(x)){
+                this.technicians[x].removeModule(numberOfModule);
+            }
+        }
+    }
+
+    updateAvailableTechnicians(){
+        let toRemove = Array();
+        for(let x in this.technicians){
+            if(this.technicians[x].isAssigned){
+                toRemove.push(x);
+            }
+        }
+        for(let i = 0; i < toRemove.length; i){
+            delete this.technicians[toRemove[i]];
+        }
+    }
+
+    hasAvailableTechnicians(){
+        for(let x in this.technicians){
+            if(this.technicians.hasOwnProperty(x)){
+                if(this.technicians[x].isAvailable()){
+                    return true;
+                }
+            }
+        }
+    return false;
     }
 }
 

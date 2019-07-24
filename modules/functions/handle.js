@@ -18,6 +18,10 @@ export async function createOrganizer(bosses, technicians){
         organizer.addTechnician(idTehnician, name, modules);
     }
     organizer.removeRedundantBosses();
+    organizer.updateModules();
     return organizer;
+}
 
+export async function assignTehnicians(organizer){
+    
 }
