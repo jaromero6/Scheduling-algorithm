@@ -90,17 +90,27 @@ export class Organizer{
     }
 
     getModuleWithMostAssignedTechnicians(){
-        let moduleSelected = this.modulesOrg.getModuleWithMostAssignedTechnicians();
-        let bossToAssign = this.bossesOrg.getBossToAssign(moduleSelected);
-        
-    }
-
-    getBestBossToAssignTo(moduleNumber){
-
+        return this.modulesOrg.getModuleWithMostAssignedTechnicians();
     }
     
-    assignModuleToBosses(){
+    assignModuleToBosses(moduleSelected){
+        let bossToAssign = this.bossesOrg.getBossToAssign(moduleSelected);
+        if(bossToAssign != null){
+            this.modulesOrg.assignBoss(moduleSelected,bossToAssign);
+            return true;
+        }
+        return false;
+    }
 
+    assignAllBosses(){
+        while(this.bossesOrg.hasAvailableBosses() && 
+        this.modulesOrg.hasModulesUnassignedBoss()){
+            let moduleSelected = this.getModuleWithMostAssignedTechnicians();
+            let result = this.assignModuleToBosses(moduleSelected);
+            if(!result){
+                break;
+            }
+        }
     }
 }
 

@@ -13,6 +13,13 @@ class TimeModule{
 
     }
 
+    hasBoss(){
+        if(this.boss === null){
+            return false;
+        }
+        return true;
+    }
+
     hasPotentialTehnicians(){
         return !isEmpty(this.potentialTechnicians);
     }
@@ -91,15 +98,11 @@ class TimeModule{
         return maxModule;
     }
 
-    addBoss(boss){
-
+    assignBoss(boss){
+        this.boss = boss;
+        boss.removeModule(this.number);
+        boss.assignedModules.push(this.number);
     }
-
-    removeBoss(boss){
-
-    }
-
-    
 }
 
 export class Schedule{
@@ -199,11 +202,32 @@ export class Schedule{
         for(let x in this.doneModules){
             if(this.doneModules.hasOwnProperty(x)){
                 if(this.doneModules[x].assignedTechnicians.length > maxValue){
+                    if(!this.doneModules[x].hasBoss()){
                     maxModule = this.doneModules[x];
                     maxValue = maxModule.assignedTechnicians.length;
+                    }
                 }
             }
         }
         return maxModule;
+    }
+
+    assignBoss(moduleSelected, boss){
+        moduleSelected.assignBoss(boss);
+    }
+
+    hasModulesUnassignedBoss(){
+        for(let x in this.doneModules){
+            if(this.doneModules.hasOwnProperty(x)){
+                if(!this.doneModules[x].hasBoss()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    checkConmutabilitywithBoss(boss){
+
     }
 }
