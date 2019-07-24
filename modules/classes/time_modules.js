@@ -7,6 +7,7 @@ class TimeModule{
         this.number = number;
         this.assignedTechnicians = Array();
         this.boss = null;
+        this.conmutableWith = Array();
         this.capacity = numberOfModules;
         this.potentialTechnicians = {};
 
@@ -190,5 +191,19 @@ export class Schedule{
 
     hasAvailableModules(){
         return !isEmpty(this.moduleNodes);
+    }
+
+    getModuleWithMostAssignedTechnicians(){
+        let maxModule = 0;
+        let maxValue = 0;
+        for(let x in this.doneModules){
+            if(this.doneModules.hasOwnProperty(x)){
+                if(this.doneModules[x].assignedTechnicians.length > maxValue){
+                    maxModule = this.doneModules[x];
+                    maxValue = maxModule.assignedTechnicians.length;
+                }
+            }
+        }
+        return maxModule;
     }
 }

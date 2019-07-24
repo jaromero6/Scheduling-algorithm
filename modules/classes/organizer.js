@@ -87,6 +87,19 @@ export class Organizer{
                 let moduleRestrictive = this.getRestrictiveModule();
                 this.assignToModule(moduleRestrictive);
         }
-    }   
+    }
+
+    getModuleWithMostAssignedTechnicians(){
+        let moduleSelected = this.modulesOrg.getModuleWithMostAssignedTechnicians();
+        
+    }
+
+    getBestBossToAssignTo(moduleNumber){
+
+    }
+    
+    assignModuleToBosses(){
+
+    }
 }
 
