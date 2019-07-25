@@ -4,19 +4,19 @@ import {Organizer} from '../classes/organizer.js';
 
 export async function createOrganizer(bosses, technicians){
     let organizer = new Organizer();
-    for(let i = 0; i < bosses.length; i++){
-        let idBoss = bosses[i].id;
-        let name = bosses[i].name;
-        let modules = bosses[i].modules;
-        let capacity = bosses[i].capacity;
+    bosses.forEach(boss => {
+        let idBoss = bosses.id;
+        let name = bosses.name;
+        let modules = bosses.modules;
+        let capacity = bosses.capacity;
         organizer.addBoss(idBoss, name, modules, capacity);
-    }
-    for(let i = 0; i < technicians.length;i++){
-        let idTehnician =technicians[i]['id'];
-        let name = technicians[i]['name'];
-        let modules = technicians[i]['modules'];
+    });
+    technicians.forEach(technician => {
+        let idTehnician = technician.id;
+        let name = technician.name;
+        let modules = technician.modules;
         organizer.addTechnician(idTehnician, name, modules);
-    }
+    });
     organizer.removeRedundantBosses();
     organizer.updateModules();
     return organizer;
@@ -30,25 +30,17 @@ export function receiveData(technicians, bosses, restrictions){
 }
 
 function addDefaultModules(entities, restrictions){
-    for(let i = 0; i < restrictions.length; i++){
-        idEntity = restrictions[i]["id"];
-        let defaultModule = Array(restrictions[i]["module"]);
-        for(let j = 0; j < entities.length; j++){
-            if(entities[j]["id"] === idEntity){
-                entities[j]["modules"] = defaultModule;
-            }
-        }
-    }
+    restrictions.forEach(i => {
+        entities.forEach(j => {
+            if(i.id === j.id){j.modules = [i.module];};
+        });
+    });
 }
 
 function changeModules(entities, restrictions){
-    for(let i = 0; i < restrictions.length; i++){
-        idEntity = restrictions[i]["id"];
-        modules = restrictions[i]["modules"];
-        for(let j = 0; j < entities.length; j++){
-            if(entities[j]["id"] === idEntity){
-                entities[j]["modules"] = modules;
-            }
-        }
-    }
+    restrictions.forEach(i => {
+        entities.forEach(j => {
+            if(i.id === j.id){j.modules = i.modules;};
+        });
+    });
 }

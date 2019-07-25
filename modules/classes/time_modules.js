@@ -1,6 +1,6 @@
 "use strict";
 
-import { numberOfModules, capacity } from './parameters.js';
+import { capacity } from './parameters.js';
 import { isEmpty } from '../functions/helpers.js';
 class TimeModule {
     constructor(number) {
@@ -154,20 +154,19 @@ export class Schedule {
     }
 
     removeTechniciansAsPotential(technician, numberOfModule) {
-        for (let i = 0; i < technician.modules.length; i++) {
-            let currentModule = technician.modules[i];
-            if (currentModule != numberOfModule) {
-                this.moduleNodes[currentModule].removePotentialTechnician(technician);
-            }
-        }
+        technician.modules.forEach(element => {
+            if(element != numberOfModule){
+                this.moduleNodes[element].removePotentialTechnician(technician);
+            };
+        });
     }
 
     assignToModule(numberOfModule) {
         let currentModule = this.moduleNodes[numberOfModule];
         currentModule.assignTechnicians();
-        for (let i = 0; i < currentModule.assignedTechnicians.length; i++) {
-            this.removeTechniciansAsPotential(currentModule.assignedTechnicians[i], numberOfModule);
-        }
+        currentModule.assignedTechnicians.forEach(element => {
+            this.removeTechniciansAsPotential(element, numberOfModule);
+        });
         this.doneModules[numberOfModule] = currentModule;
         delete this.moduleNodes[numberOfModule];
     }
@@ -181,9 +180,7 @@ export class Schedule {
                 }
             }
         }
-        for (let i = 0; i < toRemove.length; i++) {
-            delete this.moduleNodes[toRemove[i]];
-        }
+        toRemove.forEach(element => {delete this.moduleNodes[element];});
     }
 
     hasAvailableModules() {
@@ -254,6 +251,6 @@ export class Schedule {
                 }
             }
         }
-        return counter
+        return counter;
     }
 }

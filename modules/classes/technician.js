@@ -82,10 +82,11 @@ export class TechnicianOrganizer{
     }
 
     hasCommonModules(modules){
+        let res = false;
         modules.forEach(element => {
-            if(this.techniciansModules.has(element)) return true;
+            if(this.techniciansModules.has(element)) res = true; return null;
         });
-        return false;
+        return res;
     }
 
     filterModules(modules){

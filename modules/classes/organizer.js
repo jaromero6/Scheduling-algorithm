@@ -19,7 +19,6 @@ export class Organizer{
     }
 
     addTechnician(idTechnician, name, modules){
-        console.log(this.modulesOrg.hasCommonModules(modules));
         if(this.modulesOrg.hasCommonModules(modules)){
             this.techniciansOrg.addTechnician(idTechnician, name, modules);
             this.filterTechniciansModules(idTechnician);
@@ -51,13 +50,12 @@ export class Organizer{
 
     filterBossesModules(bossId){
         let filterModules = this.techniciansOrg.filterModules(
-                        this.bossesOrg.bosses.bossId.modules);
+                        this.bossesOrg.bosses[bossId].modules);
         this.bossesOrg.bosses[bossId].modules = filterModules;
     
     }
 
     filterTechniciansModules(technicianId){
-        console.log(this.techniciansOrg.technicians);
         let filterModules = this.modulesOrg.filterModules(
             this.techniciansOrg.technicians[technicianId].modules);
         this.techniciansOrg.technicians[technicianId].modules = filterModules;
