@@ -5,10 +5,10 @@ import {Organizer} from '../classes/organizer.js';
 export async function createOrganizer(bosses, technicians){
     let organizer = new Organizer();
     bosses.forEach(boss => {
-        let idBoss = bosses.id;
-        let name = bosses.name;
-        let modules = bosses.modules;
-        let capacity = bosses.capacity;
+        let idBoss = boss.id;
+        let name = boss.name;
+        let modules = boss.modules;
+        let capacity = boss.capacity;
         organizer.addBoss(idBoss, name, modules, capacity);
     });
     technicians.forEach(technician => {
