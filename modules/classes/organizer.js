@@ -91,33 +91,54 @@ export class Organizer{
         }
     }
 
-    getModuleWithMostAssignedTechnicians(){
-        return this.modulesOrg.getModuleWithMostAssignedTechnicians();
-    }
-    
-    assignModuleToBosses(moduleSelected){
-        let bossToAssign = this.bossesOrg.getBossToAssign(moduleSelected);
-        if(bossToAssign != null){
-            this.modulesOrg.assignBoss(moduleSelected,bossToAssign);
-            return true;
-        }
-        return false;
+    prepareToAssing(){
+        Object.values(this.bossesOrg.bosses).forEach(boss => {
+            boss.modules = this.modulesOrg.getSortedModules(boss.modules);
+        });
     }
 
-    assignAllBosses(){
+    assignBosses(){
+        Object.values(this.bossesOrg.bosses).forEach(boss => {
+            if(boss.canBeAssigned()){
+                toAssign = boss.modules[0];
+                boss.removeModule(toAssign.number);
+                this.modulesOrg.addPotentialBoss(toAssign, boss);
+            }
+        });
+        Object.values(this.modulesOrg.doneModules).forEach(mod => {
+            if(!mod.assignBoss()){
+                console.log("Hoa");
+                bosses = mod.potentialBosses;
+                toAssign = this.selectBoss(bosses);
+                mod.potentialBosses = [toAssign];
+                mod.assignBoss();
+            }
+        });
+    }
+
+    selectBoss(bosses){
+        let modulesArray = Array();
+        bosses.forEach(boss => {
+            modulesArray.push(boss.modules);
+        });
+        indexResult = this.modulesOrg.compareModules(modulesArray);
+        if(indexResult === undefined){
+            indexResult = this.bossesOrg.compareByDisponibilty(bosses);
+        }
+        return bosses[indexResult];
+    }
+
+    assignAllBossesToModules(){
+        this.prepareToAssing();
         while(this.bossesOrg.hasAvailableBosses() && 
         this.modulesOrg.hasModulesUnassignedBoss()){
-            let moduleSelected = this.getModuleWithMostAssignedTechnicians();
-            let result = this.assignModuleToBosses(moduleSelected);
-            if(!result){
-                break;
+            this.assignBosses();
             }
         }
-    }
 
     optimize(){
         this.assignAllTechnicians();
-        this.assignAllBosses();
+        this.assignAllBossesToModules();
     }
 
     getResult(){

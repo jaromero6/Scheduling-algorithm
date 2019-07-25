@@ -1,3 +1,5 @@
+import {getMaximum} from '../functions/helpers.js';
+
 class Boss{
     constructor(idBoss, name, modules, capacity){
         this.idBoss = idBoss;
@@ -13,7 +15,7 @@ class Boss{
     }
 
     canBeAssigned(){
-        return this.assignedModules.length < this.maxModules;
+        return this.assignedModules.length < this.maxModules && this.assignedModules.length > 0;
     }
 
     numberOfAssignations(){
@@ -24,7 +26,7 @@ class Boss{
         this.modules = this.modules.filter(value => value != numberModule);
     }
     addConmutableBoss(boss){
-        this.canConmutateWith.push(boss.idBoss);
+        this.canConmutateWith.push(boss[idBoss]);
 
     }
 
@@ -55,11 +57,11 @@ export class BossOrganizer{
     
     addBoss(idBoss, name, modules, capacity){
         let boss = new Boss(idBoss, name, modules, capacity);
-        this.bosses.idBoss = boss;
+        this.bosses[idBoss] = boss;
     }
 
     unableBoss(numberOfBoss){
-        delete this.bosses.numberOfBoss;
+        delete this.bosses[numberOfBoss];
     }
 
     findBossesWithModule(numberModule){
@@ -78,36 +80,7 @@ export class BossOrganizer{
         return bossesArray.filter(boss => boss.canBeAssigned());
 
     }
-    // Cambiar criterio de elección de jefes
-    getBossToAssign(moduleSelected){
-        let feasibleBosses = this.findBossesWithModule(moduleSelected.number);
-        let minValue = null;
-        let boss = Array();
-        for(let i = 0; i < feasibleBosses.length; i++){
-            if(minValue === null){
-                minValue = feasibleBosses[i].numberOfAssignations();
-                boss = [feasibleBosses[i]];
-            }else{
-                if(feasibleBosses[i].numberOfAssignations() < minValue){
-                    minValue = feasibleBosses[i].numberOfAssignations();
-                    boss = [feasibleBosses[i]];
-                }else if(feasibleBosses[i].numberOfAssignations() == minValue){
-                    boss.push(feasibleBosses[i]);
-                }
-            }
-        }
-        if(!boss.length){
-            return null;
-        }
-        for(let i = 0; i < boss.length; i++){
-            for(let j = 0; j < boss.length; j++){
-                if( i != j){
-                    boss[i].addConmutableBoss(boss[j]);
-                }
-            }
-        }
-        return boss[0];
-    }
+
 
     hasAvailableBosses(){
         for(let x in this.bosses){
@@ -118,5 +91,14 @@ export class BossOrganizer{
             }
         }
         return false;
+    }
+
+    compareByDisponibility(bosses){
+        let comparing = Array();
+        bosses.forEach(boss => {
+            comparing.push(boss.capacity);
+        });
+        return bosses.indexOf(getMaximun(comparing));
+
     }
 }

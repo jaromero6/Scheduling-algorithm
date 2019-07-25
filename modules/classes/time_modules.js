@@ -1,7 +1,7 @@
 "use strict";
 
 import { capacity } from './parameters.js';
-import { isEmpty } from '../functions/helpers.js';
+import { isEmpty, getMinimum, isUnique, isEmpityMatrix } from '../functions/helpers.js';
 class TimeModule {
     constructor(number) {
         this.number = number;
@@ -10,6 +10,7 @@ class TimeModule {
         this.conmutableWith = Array();
         this.capacity = capacity;
         this.potentialTechnicians = {};
+        this.potentialBosses = Array();
     }
 
     hasBoss() {
@@ -92,10 +93,17 @@ class TimeModule {
         }
     }
 
-    assignBoss(boss) {
-        this.boss = boss.idBoss;
-        boss.removeModule(this.number);
-        boss.assignedModules.push(this.number);
+    assignPotentialBoss(boss){
+        this.potentialBosses.push(boss);
+    }
+
+    assignBoss() {
+        if(this.potentialBosses.length === 1){
+            this.boss = this.potentialBosses[0];
+            this.boss.assignedModules.push(this.number);
+            return true;
+        }
+        return false;
     }
 }
 
@@ -187,20 +195,20 @@ export class Schedule {
         return !isEmpty(this.moduleNodes);
     }
 
-    getModuleWithMostAssignedTechnicians() {
+    getModuleWithMostAssignedTechnicians(modulesArray) {
         let maxModule = 0;
         let maxValue = 0;
-        for (let x in this.doneModules) {
-            if (this.doneModules.hasOwnProperty(x)) {
-                if (this.doneModules[x].assignedTechnicians.length > maxValue) {
-                    if (!this.doneModules[x].hasBoss()) {
-                        maxModule = this.doneModules[x];
-                        maxValue = maxModule.assignedTechnicians.length;
-                    }
-                }
-            }
-        }
+        modulesArray.forEach(element => {
+            if(maxValue < this.doneModules[element].assignedTechnicians.length){
+                maxModule = this.doneModules[x];
+                maxValue = maxModule.assignedTechnicians.length;
+            };
+        });
         return maxModule;
+    }
+
+    assignPotentialBoss(moduleNumber, boss){
+        this.doneModules[moduleNumber].assignPotentialBoss(boss);
     }
 
     assignBoss(moduleSelected, boss) {
@@ -240,6 +248,33 @@ export class Schedule {
             }
         }
         return response;
+    }
+
+    getSortedModules(modulesArray){
+        let result = Array();
+        modulesArray.forEach(mod => {
+            result.push(this.doneModules[mod]);
+        });
+        result.sort((a,b) => (a.assignedTechnicians.length > b.assignedTechnicians.length) ? 1 : 
+            ((b.assignedTechnicians.length > a.assignedTechnicians.length) ? -1 : 0)); 
+        return result;
+    }
+
+    compareModules(modulesArray){
+        if(isEmpityMatrix(modulesArray)){
+            return undefined;
+        }
+        let comparing = Array();
+        modulesArray.forEach(element => {
+            comparing.push(this.moduleNodes[element[0]]);
+        });
+        let minValue = getMinimum(comparing);
+        if(isUnique) return comparing.indexOf(minValue);
+        let newCompare = Array();
+        modulesArray.forEach(element => {
+            newCompare.push(element.slice(1,))
+        });
+        return this.compareModules(modulesArray);
     }
 
     totalWorkingTechnicians(){
