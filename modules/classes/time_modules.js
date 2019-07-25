@@ -105,14 +105,15 @@ export class Schedule {
         this.moduleNodes = {};
         this.doneModules = {};
     }
-
+    
     hasCommonModules(modules) {
-        for (let i = 0; i < modules.length; i++) {
-            if (this.modules.has(modules[i])) {
-                return true;
-            }
-        }
-        return false;
+        let res = false
+        modules.forEach(element => {
+            if(this.modules.has(element)){ 
+                res =  true; return null;};
+
+            });
+        return res;
     }
 
     addModule(numberModule) {
@@ -131,13 +132,12 @@ export class Schedule {
     getModuleWithMostTechnicians(modules, priority) {
         let maxModule = 0;
         let maxValue = 0;
-        for (let i = 0; i < modules.length; i++) {
-            let moduleIndex = modules[i];
-            if (this.moduleNodes[moduleIndex].hasTechniciansWithPriority(priority) > maxValue) {
-                maxModule = moduleIndex;
-                maxValue = this.moduleNodes[moduleIndex].hasTechniciansWithPriority(priority);
+        modules.forEach(element => {
+            if(this.moduleNodes[element].hasTechniciansWithPriority(priority) > maxValue){
+                maxModule = element;
+                maxValue = this.moduleNodes[element].hasTechniciansWithPriority(priority);
             }
-        }
+        });
         return maxModule;
     }
 

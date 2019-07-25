@@ -50,7 +50,7 @@ export class TechnicianOrganizer{
         let counter = 0;
         for(let x in this.technicians){
             if(this.technicians.hasOwnProperty(x)){
-                if(this.technicians[x].isAssigned) counter++;
+                if(this.technicians.x.isAssigned) counter++;
             }
         }
         return counter;
@@ -77,17 +77,14 @@ export class TechnicianOrganizer{
     addTechnician(idTechnician, name, modules){
         let technician = new Technician(idTechnician, name, modules);
         this.technicians[idTechnician] = technician;
-        for(let i = 0; i < modules.length; i++){
-            this.techniciansModules.add(modules[i]);
-        }
+        modules.forEach(element => {this.techniciansModules.add(element);
+                                    });
     }
 
     hasCommonModules(modules){
-        for(let i = 0; i < modules.length; i++){
-            if(this.techniciansModules.has(modules[i])){
-                return true;
-            }
-        }
+        modules.forEach(element => {
+            if(this.techniciansModules.has(element)) return true;
+        });
         return false;
     }
 
@@ -110,9 +107,9 @@ export class TechnicianOrganizer{
                 toRemove.push(x);
             }
         }
-        for(let i = 0; i < toRemove.length; i){
-            delete this.technicians[toRemove[i]];
-        }
+        toRemove.forEach(element => {
+            delete this.technicians[element];
+        });
     }
 
     hasAvailableTechnicians(){

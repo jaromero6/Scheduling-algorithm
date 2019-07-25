@@ -14,12 +14,12 @@ export class Organizer{
 
     addBoss(idBoss, name, modules, capacity){
         this.bossesOrg.addBoss(idBoss, name, modules, capacity);
-        for(let i = 0; i < modules.length; i++){
-            this.modulesOrg.addModule(modules[i]);
-        }
+        modules.forEach(element => {
+            this.modulesOrg.addModule(element);});
     }
 
     addTechnician(idTechnician, name, modules){
+        console.log(this.modulesOrg.hasCommonModules(modules));
         if(this.modulesOrg.hasCommonModules(modules)){
             this.techniciansOrg.addTechnician(idTechnician, name, modules);
             this.filterTechniciansModules(idTechnician);
@@ -51,25 +51,25 @@ export class Organizer{
 
     filterBossesModules(bossId){
         let filterModules = this.techniciansOrg.filterModules(
-                        this.bossesOrg.bosses[bossId].modules);
+                        this.bossesOrg.bosses.bossId.modules);
         this.bossesOrg.bosses[bossId].modules = filterModules;
     
     }
 
-    filterTechniciansModules(technician){
-            let filterModules = this.modulesOrg.filterModules(
-                this.techniciansOrg.technicians[technician].modules);
-            this.techniciansOrg.technicians[technician].modules = filterModules;
+    filterTechniciansModules(technicianId){
+        console.log(this.techniciansOrg.technicians);
+        let filterModules = this.modulesOrg.filterModules(
+            this.techniciansOrg.technicians[technicianId].modules);
+        this.techniciansOrg.technicians[technicianId].modules = filterModules;
     }
 
 
     addAsPotentialTechnician(idTechnician){
         let technician = this.techniciansOrg.technicians[idTechnician];
         let priority = technician.getPriority();
-        for(let i = 0;i < technician.modules.length;i++){
-            let timeModule = technician.modules[i];
-            this.modulesOrg.addPotentialTechnician(technician, timeModule, priority);
-        }
+        technician.modules.forEach(element => {
+            this.modulesOrg.addPotentialTechnician(technician, element, priority);
+        });
     }
     getRestrictiveModule(){
         let currentPriority = 1

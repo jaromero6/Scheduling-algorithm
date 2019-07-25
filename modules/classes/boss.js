@@ -55,11 +55,11 @@ export class BossOrganizer{
     
     addBoss(idBoss, name, modules, capacity){
         let boss = new Boss(idBoss, name, modules, capacity);
-        this.bosses[idBoss] = boss;
+        this.bosses.idBoss = boss;
     }
 
     unableBoss(numberOfBoss){
-        delete this.bosses[numberOfBoss];
+        delete this.bosses.numberOfBoss;
     }
 
     findBossesWithModule(numberModule){
@@ -78,7 +78,7 @@ export class BossOrganizer{
         return bossesArray.filter(boss => boss.canBeAssigned());
 
     }
-    // Añadir conmutabilidad con los jefes
+    // Cambiar criterio de elección de jefes
     getBossToAssign(moduleSelected){
         let feasibleBosses = this.findBossesWithModule(moduleSelected.number);
         let minValue = null;
