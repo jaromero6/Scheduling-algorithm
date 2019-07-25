@@ -6,6 +6,10 @@ import {createOrganizer} from './modules/functions/handle.js';
 export async function getSchedule(technicians, bosses, restrictions){
     receiveData(technicians, bosses, restrictions);
     let organizer = await createOrganizer(bosses, technicians);
-    organizer.optimize();
-    return organizer.getResult();
+    if(organizer.checkFeasibleAssignation()){
+        organizer.optimize();
+        return organizer.getResult();   
+    }
+    alert('Technicians and bosses doesn`t have common modules');
+    return null;
 }

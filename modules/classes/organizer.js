@@ -45,6 +45,10 @@ export class Organizer{
         this.modulesOrg.filterFeasibleModules();
     }
 
+    checkFeasibleAssignation(){
+        return this.techniciansOrg.hasTechnicians();
+    }
+
     filterBossesModules(bossId){
         let filterModules = this.techniciansOrg.filterModules(
                         this.bossesOrg.bosses[bossId].modules);
@@ -120,9 +124,10 @@ export class Organizer{
 
     getResult(){
         let result = {};
-        result['technicians'] = this.techniciansOrg.technicians;
-        result['modules'] = this.modulesOrg.doneModules;
-        result['bosses'] = this.bossesOrg.bosses;
+        result['technicians'] = this.techniciansOrg.getThechniciansInformation();
+        result['modules'] = this.modulesOrg.getModulesInformation();
+        result['bosses'] = this.bossesOrg.getBossesInformation();
+        result['optimalValue'] = this.modulesOrg.totalWorkingTechnicians();
         return result;
     }
 }

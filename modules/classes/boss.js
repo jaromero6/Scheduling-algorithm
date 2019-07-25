@@ -27,13 +27,32 @@ class Boss{
         this.canConmutateWith.push(boss.idBoss);
 
     }
+
+    
 }
 
 export class BossOrganizer{
     constructor(){
         this.bosses = {};
     }
-
+    getBossesInformation(){
+        let response = {};
+        for(let x in this.bosses){
+            if(this.bosses.hasOwnProperty(x)){
+                let boss = this.bosses[x];
+                let id = boss.idBoss;
+                let name = boss.name;
+                let assignedModules = boss.assignedModules;
+                let conmutableWith = boss.canConmutateWith;
+                response[id] = {};
+                response[id]['name'] = name;
+                response[id]['assignedModules'] = assignedModules;
+                response[id]['conmutableWith'] = conmutableWith;
+            }
+        }
+    return response;
+    }
+    
     addBoss(idBoss, name, modules, capacity){
         let boss = new Boss(idBoss, name, modules, capacity);
         this.bosses[idBoss] = boss;
@@ -67,12 +86,12 @@ export class BossOrganizer{
         for(let i = 0; i < feasibleBosses.length; i++){
             if(minValue === null){
                 minValue = feasibleBosses[i].numberOfAssignations();
-                boss = feasibleBosses[i];
+                boss = [feasibleBosses[i]];
             }else{
                 if(feasibleBosses[i].numberOfAssignations() < minValue){
                     minValue = feasibleBosses[i].numberOfAssignations();
                     boss = [feasibleBosses[i]];
-                }else if(feasibleBosses[i].numberOfAssignations() < minValue){
+                }else if(feasibleBosses[i].numberOfAssignations() == minValue){
                     boss.push(feasibleBosses[i]);
                 }
             }

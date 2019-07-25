@@ -52,6 +52,7 @@ class TimeModule {
                 delete this.potentialTechnicians[currentPriority];
             }
             toAssign.isAssigned = true;
+            toAssign.isAssignedTo = this.number;
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class TimeModule {
     }
 
     assignBoss(boss) {
-        this.boss = boss;
+        this.boss = boss.idBoss;
         boss.removeModule(this.number);
         boss.assignedModules.push(this.number);
     }
@@ -228,7 +229,31 @@ export class Schedule {
         }
     }
 
-    checkConmutabilitywithBoss(boss) {
+    getModulesInformation(){
+        let response = {};
+        for(let x in this.doneModules){
+            if(this.doneModules.hasOwnProperty(x)){
+                let currentModule = this.doneModules[x];
+                let id = currentModule.number;
+                let assignedTechnicians = currentModule.assignedTechnicians;
+                let boss = currentModule.boss;
+                response[id] = {};
+                response[id]['assignedTechnicians'] = assignedTechnicians;
+                response[id]['boss'] = boss;
+            }
+        }
+        return response;
+    }
 
+    totalWorkingTechnicians(){
+        let counter = 0;
+        for(let x in this.doneModules){
+            if(this.doneModules.hasOwnProperty(x)){
+                if(this.doneModules[x].boss){
+                    counter += this.doneModules[x].assignedTechnicians.length;
+                }
+            }
+        }
+        return counter
     }
 }
