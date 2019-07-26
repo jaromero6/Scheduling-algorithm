@@ -95,6 +95,7 @@ class TimeModule {
 
     assignPotentialBoss(boss){
         this.potentialBosses.push(boss);
+        console.log(this.potentialBosses);
     }
 
     assignBoss() {

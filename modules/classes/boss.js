@@ -8,7 +8,6 @@ class Boss{
         this.maxModules = capacity;
         this.assignedModules = Array();
         this.canConmutateWith = Array();
-        this.totalPotentialTechnicians = 0;
     }
 
     hasModule(numberMOdule){
@@ -24,7 +23,7 @@ class Boss{
     }
 
     removeModule(numberModule){
-        this.modules = this.modules.filter(value => value != numberModule);
+        this.modules = this.modules.filter(mod => mod.number != numberModule);
     }
     addConmutableBoss(boss){
         this.canConmutateWith.push(boss[idBoss]);
@@ -35,7 +34,9 @@ class Boss{
     }
 
     getCostOfAssign(){
-        return this.totalPotentialTechnicians / this.getCurrentDisponibility() ;
+        let total = 0;
+        this.modules.forEach(mod => {total += mod.assignedTechnicians.length});
+        return total / this.getCurrentDisponibility() ;
     }
 
     addConmutableBoss(bossId, moduleNumber){
@@ -80,10 +81,7 @@ export class BossOrganizer{
     hasAvailableBosses(){
         let result = false;
         Object.values(this.bosses).forEach(boss => {
-            if(boss.canBeAssigned()){
-                result = true;
-                return undefined;
-            }
+            if(boss.canBeAssigned()){ result = true; return undefined; }
         });
         return result;
     }
