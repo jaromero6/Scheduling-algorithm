@@ -97,9 +97,7 @@ export class Organizer{
         Object.values(this.bossesOrg.bosses).forEach(boss => {
             if(boss.canBeAssigned()){
                 let toAssign = boss.modules[0];
-                console.log('----', boss.modules);
                 boss.removeModule(toAssign.number);
-                console.log('----', boss.modules);
                 this.modulesOrg.assignPotentialBoss(toAssign.number, boss);
             }
         });
