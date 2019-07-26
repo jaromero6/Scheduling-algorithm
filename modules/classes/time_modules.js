@@ -1,7 +1,7 @@
 "use strict";
 
 import { capacity } from './parameters.js';
-import { isEmpty, getMinimum, isUnique, isEmpityMatrix } from '../functions/helpers.js';
+import { isEmpty } from '../functions/helpers.js';
 class TimeModule {
     constructor(number) {
         this.number = number;

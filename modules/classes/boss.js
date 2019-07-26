@@ -1,4 +1,4 @@
-import {getMaximum} from '../functions/helpers.js';
+'use strict';
 
 class Boss{
     constructor(idBoss, name, modules, capacity){
