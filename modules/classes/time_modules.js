@@ -152,13 +152,11 @@ export class Schedule {
 
     getModulesByPriority(priority) {
         let modulesWithPriority = Array();
-        for (let x in this.moduleNodes) {
-            if (this.moduleNodes.hasOwnProperty(x)) {
-                if (this.moduleNodes[x].hasTechniciansWithPriority(priority)) {
-                    modulesWithPriority.push(parseInt(x));
-                }
+        Object.values(this.moduleNodes).forEach(mod => {
+            if(mod.hasTechniciansWithPriority(priority)){
+                modulesWithPriority.push(mod.number);
             }
-        }
+        });
         return modulesWithPriority;
     }
 
@@ -182,13 +180,9 @@ export class Schedule {
 
     filterFeasibleModules() {
         let toRemove = Array();
-        for (let x in this.moduleNodes) {
-            if (this.moduleNodes.hasOwnProperty(x)) {
-                if (isEmpty(this.moduleNodes[x].potentialTechnicians)) {
-                    toRemove.push(x);
-                }
-            }
-        }
+        Object.values(this.moduleNodes).forEach(mod => {
+            if(isEmpty(mod.potentialTechnicians)) {toRemove.push(mod.number); }
+        });
         toRemove.forEach(element => {delete this.moduleNodes[element];});
     }
 
@@ -206,14 +200,11 @@ export class Schedule {
     }
 
     hasModulesUnassignedBoss() {
-        for (let x in this.doneModules) {
-            if (this.doneModules.hasOwnProperty(x)) {
-                if (!this.doneModules[x].hasBoss()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        let result = false;
+        Object.values(this.doneModules).forEach(mod => {
+            if( !mod.hasBoss()) {result = true; return undefined;}
+        });
+        return result;
     }
 
     addDefaultTechnician(technician, moduleNumber) {
@@ -226,17 +217,14 @@ export class Schedule {
 
     getModulesInformation(){
         let response = {};
-        for(let x in this.doneModules){
-            if(this.doneModules.hasOwnProperty(x)){
-                let currentModule = this.doneModules[x];
-                let id = currentModule.number;
-                let assignedTechnicians = currentModule.assignedTechnicians;
-                let boss = currentModule.boss;
-                response[id] = {};
-                response[id]['assignedTechnicians'] = assignedTechnicians;
-                response[id]['boss'] = boss;
-            }
-        }
+        Object.values(this.doneModules).forEach(mod => {
+            let id = mod.number;
+            let assignedTechnicians = mod.assignedTechnicians;
+            let boss = mod.boss;
+            response[id] = {};
+            response[id]['assignedTechnicians'] = assignedTechnicians;
+            response[id]['boss'] = boss;
+        })
         return response;
     }
 
@@ -252,13 +240,9 @@ export class Schedule {
 
     totalWorkingTechnicians(){
         let counter = 0;
-        for(let x in this.doneModules){
-            if(this.doneModules.hasOwnProperty(x)){
-                if(this.doneModules[x].boss){
-                    counter += this.doneModules[x].assignedTechnicians.length;
-                }
-            }
-        }
+        Object.values(this.doneModules).forEach(mod => {
+            if(mod.boss){ counter += mod.assignedTechnicians.length;}
+        });
         return counter;
     }
 

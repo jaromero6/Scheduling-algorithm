@@ -53,19 +53,16 @@ export class BossOrganizer{
     }
     getBossesInformation(){
         let response = {};
-        for(let x in this.bosses){
-            if(this.bosses.hasOwnProperty(x)){
-                let boss = this.bosses[x];
-                let id = boss.idBoss;
-                let name = boss.name;
-                let assignedModules = boss.assignedModules;
-                let conmutableWith = boss.canConmutateWith;
-                response[id] = {};
-                response[id]['name'] = name;
-                response[id]['assignedModules'] = assignedModules;
-                response[id]['conmutableWith'] = conmutableWith;
-            }
-        }
+        Object.values(this.bosses).forEach(boss => {
+            let id = boss.idBoss;
+            let name = boss.name;
+            let assignedModules = boss.assignedModules;
+            let conmutableWith = boss.canConmutateWith;
+            response[id] = {};
+            response[id]['name'] = name;
+            response[id]['assignedModules'] = assignedModules;
+            response[id]['conmutableWith'] = conmutableWith;
+        });
     return response;
     }
     
@@ -78,33 +75,17 @@ export class BossOrganizer{
         delete this.bosses[numberOfBoss];
     }
 
-    findBossesWithModule(numberModule){
-        let bossesWithModule = Array();
-        for(let x in this.bosses){
-            if(this.bosses.hasOwnProperty(x)){
-                if(this.bosses[x].hasModule(numberModule)){
-                    bossesWithModule.push(this.bosses[x]);
-                }
-            }
-        }
-        return this.filterAvailableBosses(bossesWithModule);
-    }
-
-    filterAvailableBosses(bossesArray){
-        return bossesArray.filter(boss => boss.canBeAssigned());
-
-    }
 
 
     hasAvailableBosses(){
-        for(let x in this.bosses){
-            if(this.bosses.hasOwnProperty(x)){
-                if(this.bosses[x].canBeAssigned()){
-                    return true;
-                }
+        let result = false;
+        Object.values(this.bosses).forEach(boss => {
+            if(boss.canBeAssigned()){
+                result = true;
+                return undefined;
             }
-        }
-        return false;
+        });
+        return result;
     }
 
     compareBosses(bosses, moduleNumber){
