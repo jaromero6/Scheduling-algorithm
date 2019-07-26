@@ -101,6 +101,7 @@ class TimeModule {
         if(this.potentialBosses.length === 1){
             this.boss = this.potentialBosses[0];
             this.boss.assignedModules.push(this.number);
+            this.potentialBosses = Array();
             return true;
         }
         return false;
@@ -195,17 +196,6 @@ export class Schedule {
         return !isEmpty(this.moduleNodes);
     }
 
-    getModuleWithMostAssignedTechnicians(modulesArray) {
-        let maxModule = 0;
-        let maxValue = 0;
-        modulesArray.forEach(element => {
-            if(maxValue < this.doneModules[element].assignedTechnicians.length){
-                maxModule = this.doneModules[x];
-                maxValue = maxModule.assignedTechnicians.length;
-            };
-        });
-        return maxModule;
-    }
 
     assignPotentialBoss(moduleNumber, boss){
         this.doneModules[moduleNumber].assignPotentialBoss(boss);
@@ -260,23 +250,6 @@ export class Schedule {
         return result;
     }
 
-    compareModules(modulesArray){
-        if(isEmpityMatrix(modulesArray)){
-            return undefined;
-        }
-        let comparing = Array();
-        modulesArray.forEach(element => {
-            comparing.push(this.moduleNodes[element[0]]);
-        });
-        let minValue = getMinimum(comparing);
-        if(isUnique) return comparing.indexOf(minValue);
-        let newCompare = Array();
-        modulesArray.forEach(element => {
-            newCompare.push(element.slice(1,))
-        });
-        return this.compareModules(modulesArray);
-    }
-
     totalWorkingTechnicians(){
         let counter = 0;
         for(let x in this.doneModules){
@@ -287,5 +260,13 @@ export class Schedule {
             }
         }
         return counter;
+    }
+
+    getTotalTechnicians(bossModules){
+        let total = 0;
+        bossModules.forEach(element => {
+            total += this.doneModules[element].assignedTechnicians.length;
+        });
+        return total;
     }
 }

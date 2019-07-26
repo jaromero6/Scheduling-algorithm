@@ -100,32 +100,23 @@ export class Organizer{
     assignBosses(){
         Object.values(this.bossesOrg.bosses).forEach(boss => {
             if(boss.canBeAssigned()){
-                toAssign = boss.modules[0];
+                let toAssign = boss.modules[0];
                 boss.removeModule(toAssign.number);
-                this.modulesOrg.addPotentialBoss(toAssign, boss);
+                this.modulesOrg.assignPotentialBoss(toAssign.number, boss);
             }
         });
         Object.values(this.modulesOrg.doneModules).forEach(mod => {
-            if(!mod.assignBoss()){
-                console.log("Hoa");
-                bosses = mod.potentialBosses;
-                toAssign = this.selectBoss(bosses);
-                mod.potentialBosses = [toAssign];
-                mod.assignBoss();
+            if(mod.potentialBosses.length){
+                if(!mod.assignBoss()){
+                    let bosses = mod.potentialBosses;
+                    console.log(bosses);
+                    let toAssign = this.bossesOrg.compareBosses(bosses, mod.number);
+                    mod.potentialBosses = [toAssign];
+                    mod.assignBoss();
+                }
+            this.bossesOrg.removeModule(mod.number);
             }
         });
-    }
-
-    selectBoss(bosses){
-        let modulesArray = Array();
-        bosses.forEach(boss => {
-            modulesArray.push(boss.modules);
-        });
-        indexResult = this.modulesOrg.compareModules(modulesArray);
-        if(indexResult === undefined){
-            indexResult = this.bossesOrg.compareByDisponibilty(bosses);
-        }
-        return bosses[indexResult];
     }
 
     assignAllBossesToModules(){

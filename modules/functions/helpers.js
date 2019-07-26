@@ -21,7 +21,7 @@ export function getMinimum(numbersArray){
 export function getMaximum(numbersArray){
     let maxValue = 0;
     numbersArray.forEach(element => {
-        if(element > maxValue) maxValue = element;
+        if(element > maxValue){ maxValue = element;}
     });
     return maxValue;
 }

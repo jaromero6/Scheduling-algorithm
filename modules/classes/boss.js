@@ -8,6 +8,7 @@ class Boss{
         this.maxModules = capacity;
         this.assignedModules = Array();
         this.canConmutateWith = Array();
+        this.totalPotentialTechnicians = 0;
     }
 
     hasModule(numberMOdule){
@@ -15,7 +16,7 @@ class Boss{
     }
 
     canBeAssigned(){
-        return this.assignedModules.length < this.maxModules && this.assignedModules.length > 0;
+        return this.getCurrentDisponibility() && this.modules.length > 0;
     }
 
     numberOfAssignations(){
@@ -27,6 +28,19 @@ class Boss{
     }
     addConmutableBoss(boss){
         this.canConmutateWith.push(boss[idBoss]);
+    }
+    
+    getCurrentDisponibility(){
+        return this.maxModules - this.assignedModules.length;
+    }
+
+    getCostOfAssign(){
+        return this.totalPotentialTechnicians / this.getCurrentDisponibility() ;
+    }
+
+    addConmutableBoss(bossId, moduleNumber){
+        let conmutable = {'id': bossId, 'moduleNumber': moduleNumber};
+        this.canConmutateWith.push(conmutable);
 
     }
 
@@ -93,12 +107,43 @@ export class BossOrganizer{
         return false;
     }
 
-    compareByDisponibility(bosses){
-        let comparing = Array();
-        bosses.forEach(boss => {
-            comparing.push(boss.capacity);
-        });
-        return bosses.indexOf(getMaximun(comparing));
+    compareBosses(bosses, moduleNumber){
+        let result = this.compareByCostOfAssign(bosses);
+        if(result.length > 1){
+            this.addConmutability(result, moduleNumber);
+        }
+        return result[0];
+    }
 
+    compareByCostOfAssign(bosses){
+        let minBoss = Array();
+        let minValue = bosses[0].getCostOfAssign();
+        bosses.forEach(element => {
+            if(element.getCostOfAssign() < minValue){
+                minBoss = [element];
+                minValue = element.getCostOfAssign();
+            }else if(element.getCostOfAssign() == minValue){
+                minBoss.push(element);
+            }
+        });
+        return minBoss;
+    }
+
+    removeModule(moduleNumber){
+        Object.values(this.bosses).forEach(boss => {
+            boss.removeModule(moduleNumber);
+        });
+    }
+
+
+
+    addConmutability(bosses, moduleNumber){
+        bosses.forEach(i => {
+            bosses.forEach(j => {
+                if( i.idBoss != j.idBoss){
+                    i.addConmutableBoss(j.idBoss , moduleNumber);
+                }
+            });
+        });
     }
 }
