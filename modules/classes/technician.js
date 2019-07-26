@@ -45,32 +45,19 @@ export class TechnicianOrganizer{
     hasTechnicians(){
         return !isEmpty(this.technicians);
     }
-    
-    numberOfAssignedTechnicians(){
-        let counter = 0;
-        for(let x in this.technicians){
-            if(this.technicians.hasOwnProperty(x)){
-                if(this.technicians.x.isAssigned) counter++;
-            }
-        }
-        return counter;
-    }
 
     getThechniciansInformation(){
         let response = {};
-        for(let x in this.technicians){
-            if(this.technicians.hasOwnProperty(x)){
-                let technician = this.technicians[x];
-                let id = technician.idTechnician;
-                let name = technician.name;
-                let assignedTo = technician.isAssignedTo;
-                let conmutableWith = technician.canConmutateWith;
-                response[id] = {};
-                response[id]['name'] = name;
-                response[id]['assignedTo'] = assignedTo;
-                response[id]['conmutableWith'] = conmutableWith;
-            }
-        }
+        Object.values(this.technicians).forEach(technician => {
+            let id = technician.idTechnician;
+            let name = technician.name;
+            let assignedTo = technician.isAssignedTo;
+            let conmutableWith = technician.canConmutateWith;
+            response[id] = {};
+            response[id]['name'] = name;
+            response[id]['assignedTo'] = assignedTo;
+            response[id]['conmutableWith'] = conmutableWith;
+        });
         return response;
     }
 
@@ -94,34 +81,27 @@ export class TechnicianOrganizer{
     }
 
     removeModule(numberOfModule){
-        for(let x in this.technicians){
-            if(this.technicians.hasOwnProperty(x)){
-                this.technicians[x].removeModule(numberOfModule);
-            }
-        }
+        Object.values(this.technicians).forEach(technician => {
+            technician.removeModule(numberOfModule);
+        });
     }
 
     updateAvailableTechnicians(){
         let toRemove = Array();
-        for(let x in this.technicians){
-            if(this.technicians[x].isAssigned){
-                toRemove.push(x);
-            }
-        }
+        Object.values(this.technicians).forEach(technician => {
+            if(technician.isAssigned){ toRemove.push(technician.idTechnician); }
+        });
         toRemove.forEach(element => {
             delete this.technicians[element];
         });
     }
 
     hasAvailableTechnicians(){
-        for(let x in this.technicians){
-            if(this.technicians.hasOwnProperty(x)){
-                if(this.technicians[x].isAvailable()){
-                    return true;
-                }
-            }
-        }
-    return false;
+        let result = false
+        Object.values(this.technicians).forEach(technician => {
+            if(technician.isAvailable){ result = true; return undefined; }
+        });
+    return result;
     }
 }
 
