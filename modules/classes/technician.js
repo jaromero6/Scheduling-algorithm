@@ -28,11 +28,10 @@ class Technician{
     }
 
     addConmutationWith(technicians){
-        for(let i = 0; i < technicians.length; i++){
-            this.canConmutateWith.push(technicians[i].idTechnician);
-        }
-
-
+        technicians.forEach(tehcnician => {
+            this.canConmutateWith.push(tehcnician.idTechnician);
+            tehcnician.canConmutateWith.push(this.idTechnician);
+        });
     }    
 }
 

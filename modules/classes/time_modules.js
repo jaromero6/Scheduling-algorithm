@@ -64,6 +64,10 @@ class TimeModule {
         if (this.isFullModule() && this.hasTechniciansWithPriority(currentPriority)) {
             assigned.addConmutationWith(this.potentialTechnicians[currentPriority]);
         }
+        else if(! this.hasTechniciansWithPriority(currentPriority) && 
+        this.potentialTechnicians.hasOwnProperty(currentPriority + 1)){
+            assigned.addConmutationWith(this.potentialTechnicians[currentPriority + 1]);
+        }
     }
 
     addDefaultTechnician(technician) {
@@ -226,11 +230,10 @@ export class Schedule {
         let response = {};
         Object.values(this.doneModules).forEach(mod => {
             let id = mod.number;
-            let assignedTechnicians = mod.assignedTechnicians;
-            let boss = mod.boss;
             response[id] = {};
-            response[id]['assignedTechnicians'] = assignedTechnicians;
-            response[id]['boss'] = boss;
+            response[id]['assignedTechnicians'] = mod.assignedTechnicians;
+            response[id]['boss'] = mod.boss;
+            response[id]['conmutableWith'] = mod.conmutableWith;
         })
         return response;
     }
