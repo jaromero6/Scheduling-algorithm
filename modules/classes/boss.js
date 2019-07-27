@@ -49,8 +49,8 @@ class Boss{
         if(!this.canBeAssigned()){
             this.modules.forEach(mod => {
                 if(mod.assignedTechnicians.length == numberOfTechnicians){
-                    mod.addConmutationWith(assignedModule.number, this.bossId);
-                    assignedModule.addConmutationWith(mod.number, this.bossId);
+                    mod.addConmutationWith(assignedModule.number, this.idBoss);
+                    assignedModule.addConmutationWith(mod.number, this.idBoss);
                 }
             });
         }
