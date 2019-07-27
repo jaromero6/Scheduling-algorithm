@@ -40,13 +40,13 @@ class Boss{
     }
 
     addConmutableBoss(bossId, moduleNumber){
-        let conmutable = {'id': bossId, 'moduleNumber': moduleNumber};
+        let conmutable = {'idBoss': bossId, 'moduleNumber': moduleNumber};
         this.canConmutateWith.push(conmutable);
 
     }
 
     checkConmutability(numberOfTechnicians, assignedModule){
-        if(!this.canBeAssigned(){
+        if(!this.canBeAssigned()){
             this.modules.forEach(mod => {
                 if(mod.assignedTechnicians.length == numberOfTechnicians){
                     mod.addConmutationWith(assignedModule.number, this.bossId);
