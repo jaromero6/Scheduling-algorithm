@@ -98,7 +98,7 @@ export class TechnicianOrganizer{
     hasAvailableTechnicians(){
         let result = false
         Object.values(this.technicians).forEach(technician => {
-            if(technician.isAvailable){ result = true; return undefined; }
+            if(technician.isAvailable()){ result = true; return undefined; }
         });
     return result;
     }

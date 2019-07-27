@@ -1,2 +1,2 @@
 'use strict';
-export const capacity = 1;
+export const capacity = 10;

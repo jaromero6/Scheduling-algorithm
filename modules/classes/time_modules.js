@@ -40,6 +40,7 @@ class TimeModule {
                 let result = this.addTechnician(currentPriority);
                 if (!result) break;
             }
+            delete this.potentialTechnicians[currentPriority];
             currentPriority++;
         }
     }
@@ -49,9 +50,6 @@ class TimeModule {
             let toAssign = this.potentialTechnicians[currentPriority].pop();
             this.assignedTechnicians.push(toAssign);
             this.checkConmutability(currentPriority, toAssign);
-            if (!this.hasTechniciansWithPriority(currentPriority)) {
-                delete this.potentialTechnicians[currentPriority];
-            }
             toAssign.isAssigned = true;
             toAssign.isAssignedTo = this.number;
             return true;
@@ -65,7 +63,7 @@ class TimeModule {
             assigned.addConmutationWith(this.potentialTechnicians[currentPriority]);
         }
         else if(! this.hasTechniciansWithPriority(currentPriority) && 
-        this.potentialTechnicians.hasOwnProperty(currentPriority + 1)){
+        this.hasTechniciansWithPriority(currentPriority + 1)){
             assigned.addConmutationWith(this.potentialTechnicians[currentPriority + 1]);
         }
     }
@@ -90,12 +88,15 @@ class TimeModule {
     }
 
     removePotentialTechnician(technician) {
-        let priority = technician.getPriority();
-        this.potentialTechnicians[priority] = this.potentialTechnicians[priority].filter(
-            techn => techn.idTechnician !== technician.idTechnician);
-        if (!this.potentialTechnicians[priority].length) {
-            delete this.potentialTechnicians[priority];
-        }
+        let toRemove = Array();
+        Object.keys(this.potentialTechnicians).forEach(x => {
+            this.potentialTechnicians[x] = this.potentialTechnicians[x].filter(
+                techn => techn.idTechnician !== technician.idTechnician);
+                if(!this.hasTechniciansWithPriority(x)){ toRemove.push(x);}
+        });
+        toRemove.forEach(x => {
+            delete this.potentialTechnicians[x];
+        });
     }
 
     assignPotentialBoss(boss){
@@ -241,7 +242,7 @@ export class Schedule {
     getSortedModules(modulesArray){
         let result = Array();
         modulesArray.forEach(mod => {
-            result.push(this.doneModules[mod]);
+            if(this.doneModules.hasOwnProperty(mod)){result.push(this.doneModules[mod]);}
         });
         result.sort((a,b) => (a.assignedTechnicians.length > b.assignedTechnicians.length) ? 1 : 
             ((b.assignedTechnicians.length > a.assignedTechnicians.length) ? -1 : 0)); 
