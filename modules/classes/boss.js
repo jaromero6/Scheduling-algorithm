@@ -45,6 +45,18 @@ class Boss{
 
     }
 
+    checkConmutability(numberOfTechnicians, assignedModule){
+        if(!this.canBeAssigned(){
+            this.modules.forEach(mod => {
+                if(mod.assignedTechnicians.length == numberOfTechnicians){
+                    mod.addConmutationWith(assignedModule.number, this.bossId);
+                    assignedModule.addConmutationWith(mod.number, this.bossId);
+                }
+            });
+        }
+
+    }
+
     
 }
 
@@ -114,8 +126,6 @@ export class BossOrganizer{
         });
     }
 
-
-
     addConmutability(bosses, moduleNumber){
         bosses.forEach(i => {
             bosses.forEach(j => {
@@ -123,6 +133,12 @@ export class BossOrganizer{
                     i.addConmutableBoss(j.idBoss , moduleNumber);
                 }
             });
+        });
+    }
+
+    checkConmutability(){
+        Object.values(this.bosses).forEach(boss => {
+            boss.checkConmutabilityWithUnasignedModules();
         });
     }
 }

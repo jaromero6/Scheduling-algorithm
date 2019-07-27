@@ -87,7 +87,8 @@ class TimeModule {
 
     removePotentialTechnician(technician) {
         let priority = technician.getPriority();
-        this.potentialTechnicians[priority] = this.potentialTechnicians[priority].filter(techn => techn.idTechnician !== technician.idTechnician);
+        this.potentialTechnicians[priority] = this.potentialTechnicians[priority].filter(
+            techn => techn.idTechnician !== technician.idTechnician);
         if (!this.potentialTechnicians[priority].length) {
             delete this.potentialTechnicians[priority];
         }
@@ -101,10 +102,16 @@ class TimeModule {
         if(this.potentialBosses.length === 1){
             this.boss = this.potentialBosses[0];
             this.boss.assignedModules.push(this.number);
+            this.boss.checkConmutability(this.assignedTechnicians.length, this);
             this.potentialBosses = Array();
             return true;
         }
         return false;
+    }
+
+    addConmutationWith(modId, bossId){
+        let conmutation = {'module': modId, 'boss': bossId};
+        this.conmutableWith.push(conmutation);
     }
 }
 
