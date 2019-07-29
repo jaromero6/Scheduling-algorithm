@@ -135,10 +135,4 @@ export class BossOrganizer{
             });
         });
     }
-
-    checkConmutability(){
-        Object.values(this.bosses).forEach(boss => {
-            boss.checkConmutabilityWithUnasignedModules();
-        });
-    }
 }

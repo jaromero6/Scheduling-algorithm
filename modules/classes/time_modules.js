@@ -232,10 +232,13 @@ export class Schedule {
         Object.values(this.doneModules).forEach(mod => {
             let id = mod.number;
             response[id] = {};
-            response[id]['assignedTechnicians'] = mod.assignedTechnicians;
+            response[id]['assignedTechnicians'] = Array();
+            mod.assignedTechnicians.forEach(t =>{
+                response[id]['assignedTechnicians'].push(t.idTechnician);
+            });
             response[id]['boss'] = mod.boss;
             response[id]['conmutableWith'] = mod.conmutableWith;
-        })
+        });
         return response;
     }
 
