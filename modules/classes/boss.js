@@ -71,10 +71,10 @@ class BossOrganizer{
             let name = boss.name;
             let assignedModules = boss.assignedModules;
             let conmutableWith = boss.canConmutateWith;
-            let boss  = {'id': id};
-            boss['name'] = name;
-            boss[id]['assignedModules'] = assignedModules;
-            boss[id]['conmutableWith'] = conmutableWith;
+            let b = {'id': id};
+            b['name'] = name;
+            b['assignedModules'] = assignedModules;
+            b['conmutableWith'] = conmutableWith;
         });
     return response;
     }
