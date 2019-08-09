@@ -1,11 +1,12 @@
 
 'use strict';
 
-import {Schedule} from './time_modules.js';
-import {BossOrganizer} from './boss.js';
-import {TechnicianOrganizer} from './technician.js';
 
-export class Organizer{
+const Schedule = require('./time_modules').Schedule;
+const BossOrganizer = require('./boss').BossOrganizer;
+const TechnicianOrganizer = require('./technician').TechnicianOrganizer;
+
+class Organizer{
     constructor(){
         this.techniciansOrg = new TechnicianOrganizer();
         this.bossesOrg = new BossOrganizer();
@@ -137,3 +138,4 @@ export class Organizer{
     }
 }
 
+exports.Organizer = Organizer;

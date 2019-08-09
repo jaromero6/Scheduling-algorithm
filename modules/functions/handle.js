@@ -1,8 +1,8 @@
 'use strict';
-import {Organizer} from '../classes/organizer.js';
 
+const Organizer = require('../classes/organizer').Organizer;
 
-export async function createOrganizer(bosses, technicians){
+function createOrganizer(bosses, technicians){
     let organizer = new Organizer();
     bosses.forEach(boss => {
         let idBoss = boss.id;
@@ -22,7 +22,7 @@ export async function createOrganizer(bosses, technicians){
     return organizer;
 }
 
-export function receiveData(technicians, bosses, restrictions){
+function receiveData(technicians, bosses, restrictions){
     changeModules(technicians, restrictions["technician_new_modules"]);
     changeModules(bosses, restrictions["bosses_new_modules"]);
     addDefaultModules(technicians, restrictions["technicians_modules"]);
@@ -44,3 +44,6 @@ function changeModules(entities, restrictions){
         });
     });
 }
+
+exports.createOrganizer = createOrganizer;
+exports.receiveData = receiveData;

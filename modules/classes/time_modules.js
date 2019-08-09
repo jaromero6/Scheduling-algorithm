@@ -1,7 +1,7 @@
 "use strict";
 
-import { capacity } from './parameters.js';
-import { isEmpty } from '../functions/helpers.js';
+const capacity = require('./parameters').capacity;
+const isEmpty = require('../functions/helpers').isEmpty;
 class TimeModule {
     constructor(number) {
         this.number = number;
@@ -120,7 +120,7 @@ class TimeModule {
     }
 }
 
-export class Schedule {
+class Schedule {
     constructor() {
         this.modules = new Set();
         this.moduleNodes = {};
@@ -228,16 +228,17 @@ export class Schedule {
     }
 
     getModulesInformation(){
-        let response = {};
+        let response = Array();
         Object.values(this.doneModules).forEach(mod => {
             let id = mod.number;
-            response[id] = {};
-            response[id]['assignedTechnicians'] = Array();
+            let add = {'id': id};
+            add['assignedTechnicians'] = Array();
             mod.assignedTechnicians.forEach(t =>{
-                response[id]['assignedTechnicians'].push(t.idTechnician);
+                add.assignedTechnicians.push(t.idTechnician);
             });
-            response[id]['boss'] = mod.boss;
-            response[id]['conmutableWith'] = mod.conmutableWith;
+            add['boss'] = mod.boss;
+            add['conmutableWith'] = mod.conmutableWith;
+            response.push(add)
         });
         return response;
     }
@@ -268,3 +269,5 @@ export class Schedule {
         return total;
     }
 }
+
+exports.Schedule = Schedule;

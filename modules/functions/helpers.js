@@ -1,6 +1,6 @@
 'use strict';
 
-export function isEmpty(obj){
+function isEmpty(obj){
     for(var key in obj) {
         if(obj.hasOwnProperty(key)){
             return false;
@@ -8,3 +8,5 @@ export function isEmpty(obj){
     }
     return true;
 }
+
+exports.isEmpty = isEmpty;

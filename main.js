@@ -1,15 +1,17 @@
 'use strict';
-import {receiveData} from './modules/functions/handle.js';
-import {createOrganizer} from './modules/functions/handle.js';
+const handle = require('./modules/functions/handle')
+const receiveData = handle.receiveData;
+const createOrganizer = handle.createOrganizer;
 
-
-export async function getSchedule(technicians, bosses, restrictions){
+function getSchedule(technicians, bosses, restrictions){
     receiveData(technicians, bosses, restrictions);
-    let organizer = await createOrganizer(bosses, technicians);
+    let organizer = createOrganizer(bosses, technicians);
     if(organizer.checkFeasibleAssignation()){
         organizer.optimize();
         return organizer.getResult();   
     }
-    alert('Technicians and bosses doesn`t have common modules');
+    console.log('Technicians and bosses doesn`t have common modules');
     return null;
 }
+
+exports.getSchedule = getSchedule;

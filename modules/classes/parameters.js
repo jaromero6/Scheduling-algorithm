@@ -1,2 +1,3 @@
 'use strict';
-export const capacity = 10;
+const capacity = 10;
+exports.capacity = capacity;

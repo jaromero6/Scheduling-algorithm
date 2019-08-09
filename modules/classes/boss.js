@@ -60,21 +60,21 @@ class Boss{
     
 }
 
-export class BossOrganizer{
+class BossOrganizer{
     constructor(){
         this.bosses = {};
     }
     getBossesInformation(){
-        let response = {};
+        let response = Array();
         Object.values(this.bosses).forEach(boss => {
             let id = boss.idBoss;
             let name = boss.name;
             let assignedModules = boss.assignedModules;
             let conmutableWith = boss.canConmutateWith;
-            response[id] = {};
-            response[id]['name'] = name;
-            response[id]['assignedModules'] = assignedModules;
-            response[id]['conmutableWith'] = conmutableWith;
+            let boss  = {'id': id};
+            boss['name'] = name;
+            boss[id]['assignedModules'] = assignedModules;
+            boss[id]['conmutableWith'] = conmutableWith;
         });
     return response;
     }
@@ -136,3 +136,5 @@ export class BossOrganizer{
         });
     }
 }
+
+exports.BossOrganizer = BossOrganizer;

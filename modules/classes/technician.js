@@ -1,4 +1,5 @@
-import { isEmpty } from "../functions/helpers.js";
+'use strict';
+const isEmpty = require('../functions/helpers').isEmpty;
 
 class Technician{
     constructor(idTechnician, name, modules){
@@ -35,7 +36,7 @@ class Technician{
     }    
 }
 
-export class TechnicianOrganizer{
+class TechnicianOrganizer{
     constructor(){
         this.technicians = {};
         this.techniciansModules = new Set();
@@ -46,16 +47,15 @@ export class TechnicianOrganizer{
     }
 
     getThechniciansInformation(){
-        let response = {};
+        let response = Array();
         Object.values(this.technicians).forEach(technician => {
             let id = technician.idTechnician;
             let name = technician.name;
             let assignedTo = technician.isAssignedTo;
             let conmutableWith = technician.canConmutateWith;
-            response[id] = {};
-            response[id]['name'] = name;
-            response[id]['assignedTo'] = assignedTo;
-            response[id]['conmutableWith'] = conmutableWith;
+            let techn = {'id': id, 'name': name, 'assignedTo': assignedTo,
+                        'conmutableWith': conmutableWith};
+            response.push(techn);
         });
         return response;
     }
@@ -104,3 +104,4 @@ export class TechnicianOrganizer{
     }
 }
 
+exports.TechnicianOrganizer = TechnicianOrganizer;
