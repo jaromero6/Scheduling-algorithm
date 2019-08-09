@@ -12,7 +12,7 @@ function wrapperFunction(object){
     text += 'Bosses \n';
     object.bosses.forEach(boss => {
         text += `Id: ${boss.id}, name: ${boss.name},
-        assignedTo: ${technician.assignedModules}, conmutableWith: ${boss.conmutableWith}\n`;
+        assignedModules: ${boss.assignedModules}, conmutableWith: ${boss.conmutableWith}\n`;
     });
     text += 'Modules \n';
     object.modules.forEach(mod => {
