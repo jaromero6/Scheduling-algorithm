@@ -35,4 +35,4 @@ let inputObject = {technicians :[{id:5, name:"un nombre", modules:[4,3,5]},...],
 
 * The server runs in localhost:8888.
 
-* To runs the program with a singular schedule, replace the variable c by an object that is in the specified format.
+* To runs the program with a singular schedule, replace the variable c (in server.js) by an object that is in the specified format.
