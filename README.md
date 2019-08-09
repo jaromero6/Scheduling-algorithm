@@ -34,3 +34,5 @@ let inputObject = {technicians :[{id:5, name:"un nombre", modules:[4,3,5]},...],
 * Technicians that can not be assigned, are omited.
 
 * The server runs in localhost:8888.
+
+* To runs the program with a singular schedule, replace the variable c by an object that is in the specified format.
