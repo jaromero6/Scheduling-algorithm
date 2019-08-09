@@ -75,6 +75,7 @@ class BossOrganizer{
             b['name'] = name;
             b['assignedModules'] = assignedModules;
             b['conmutableWith'] = conmutableWith;
+            response.push(b);
         });
     return response;
     }
