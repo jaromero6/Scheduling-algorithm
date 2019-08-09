@@ -10,17 +10,18 @@
 
 * restrictions: An object, it has the following atributes: technicians_modules => An array of objects, each element has an id (of a technician) and modules (an array with the new modules of the technician). bosses_modules => An array of objects, each element has the id od the boss and the new modules of the boss. technician_new_modules => An array of objects, with the id of the technician and the module that should be assigned. bosses_new_modules => An array of objects, each element has an id and the module of the boss should be assigned.
 
+
 ## Example of input
 
-'''
-inputObject = {technicians :[{id:5, name:"un nombre", modules:[4,3,5]},...],
+```javascript
+let inputObject = {technicians :[{id:5, name:"un nombre", modules:[4,3,5]},...],
                bosses : [{id:5, name:"un nombre", modules:[4,3,5], capacity = 2},...],
                restrictions : {technician_modules: [ [3,2], [2,4], ... ]
                 bosses_modules: [ [1,2], ....],
                 new_technician_modules: [ {id:2,modules:[1,2,3,4]},... ]
                 new_bosses_modules: [{id:1,. modules:[1,2,3]}...],
                 capacity: 12}}
-'''
+```
 
 ## Output
 
@@ -31,3 +32,5 @@ inputObject = {technicians :[{id:5, name:"un nombre", modules:[4,3,5]},...],
 ## Important
 
 * Technicians that can not be assigned, are omited.
+
+* The server runs in localhost:8888.
