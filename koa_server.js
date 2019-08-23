@@ -8,9 +8,9 @@ let app = new Koa();
 let router = new Router();
 
 
-router.post('/getModel', body, (ctx, next) => {
+router.post('/getModel', body, async (ctx, next) => {
     let model = ctx.request.body;
-    ctx.body = optimizer.getSchedule(model.technicians,
+    ctx.body = await optimizer.getSchedule(model.technicians,
                                 model.bosses, 
                                 model.restrictions);
 
