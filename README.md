@@ -33,6 +33,6 @@ let inputObject = {technicians :[{id:5, name:"un nombre", modules:[4,3,5]},...],
 
 * Technicians that can not be assigned, are omited.
 
-* The server runs in localhost:8888.
+* The server runs in localhost:3000.
 
-* To runs the program with a singular schedule, replace the variable c (in server.js) by an object that is in the specified format.
+* To get the schedule make a post request with the object in the body to /getModel route.
