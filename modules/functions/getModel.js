@@ -1,5 +1,5 @@
 'use strict';
-const handle = require('./modules/functions/handle')
+const handle = require('./handle')
 const receiveData = handle.receiveData;
 const createOrganizer = handle.createOrganizer;
 
