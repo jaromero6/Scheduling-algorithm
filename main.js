@@ -10,8 +10,7 @@ function getSchedule(technicians, bosses, restrictions){
         organizer.optimize();
         return organizer.getResult();   
     }
-    console.log('Technicians and bosses doesn`t have common modules');
-    return null;
+    return {};
 }
 
 exports.getSchedule = getSchedule;
