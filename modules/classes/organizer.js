@@ -100,7 +100,6 @@ class Organizer{
             return true;
         }
         Object.values(this.bossesOrg.bosses).forEach(boss => {
-            console.log(boss);
             if(boss.canBeAssigned() && boss.hasModule(mod.number)){
                 mod.potentialBosses.push(boss);
             }
