@@ -11,6 +11,7 @@ class TimeModule {
         this.capacity = capacity;
         this.potentialTechnicians = {};
         this.potentialBosses = Array();
+        this.visited = false;
     }
 
     hasBoss() {
@@ -116,7 +117,6 @@ class TimeModule {
             this.boss = this.potentialBosses[0];
             this.boss.assignedModules.push(this.number);
             this.boss.checkConmutability(this.assignedTechnicians.length, this);
-            this.potentialBosses = Array();
             return true;
         }
         return false;
@@ -175,7 +175,7 @@ class Schedule {
         let maxModule = null;
         let maxValue = 0;
         Object.values(this.doneModules).forEach(mod => {
-            if(mod.assignedTechnicians.length > maxValue && mod.boss == null){
+            if(mod.assignedTechnicians.length > maxValue && !mod.visited){
                 maxValue = mod.assignedTechnicians.length;
                 maxModule = mod;
                 }
@@ -203,7 +203,7 @@ class Schedule {
 
     assignToModule(numberOfModule) {
         let currentModule = this.moduleNodes[numberOfModule];
-        if(currentModule.getTotalPotentialTechnicians() > this.minValue){
+        if(currentModule.getTotalPotentialTechnicians() >= this.minValue){
             currentModule.assignTechnicians();
         }
         currentModule.assignedTechnicians.forEach(element => {
@@ -279,7 +279,7 @@ class Schedule {
     totalWorkingTechnicians(){
         let counter = 0;
         Object.values(this.doneModules).forEach(mod => {
-            if(mod.boss){ counter += mod.assignedTechnicians.length;}
+            if(mod.boss != null){ counter += mod.assignedTechnicians.length;}
         });
         return counter;
     }
