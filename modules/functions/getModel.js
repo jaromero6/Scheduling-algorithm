@@ -5,7 +5,8 @@ const createOrganizer = handle.createOrganizer;
 
 async function getSchedule(technicians, bosses, restrictions){
     receiveData(technicians, bosses, restrictions);
-    let organizer = createOrganizer(bosses, technicians);
+    const min = restrictions.min_technicians_per_module;
+    let organizer = createOrganizer(bosses, technicians, min);
     if(organizer.checkFeasibleAssignation()){
         organizer.optimize();
         return organizer.getResult();   

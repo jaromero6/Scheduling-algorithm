@@ -7,10 +7,10 @@ const BossOrganizer = require('./boss').BossOrganizer;
 const TechnicianOrganizer = require('./technician').TechnicianOrganizer;
 
 class Organizer{
-    constructor(){
+    constructor(minValue){
         this.techniciansOrg = new TechnicianOrganizer();
         this.bossesOrg = new BossOrganizer();
-        this.modulesOrg = new Schedule();
+        this.modulesOrg = new Schedule(minValue);
     }
 
     addBoss(idBoss, name, modules, capacity){
@@ -73,7 +73,7 @@ class Organizer{
             modules = this.modulesOrg.getModulesByPriority(currentPriority);
             currentPriority += 1;
         }
-        return this.modulesOrg.getModuleWithMostTechnicians(modules, currentPriority - 1);
+        return this.modulesOrg.getModuleWithMostPotentialTechnicinas();
     }
 
     assignToModule(numberModule){
@@ -95,31 +95,36 @@ class Organizer{
     }
 
     assignBosses(){
+        let mod = this.modulesOrg.getModuleWithMostTechnicians();
+        if(mod == null){
+            return true;
+        }
         Object.values(this.bossesOrg.bosses).forEach(boss => {
-            if(boss.canBeAssigned()){
-                let toAssign = boss.modules[0];
-                boss.removeModule(toAssign.number);
-                this.modulesOrg.assignPotentialBoss(toAssign.number, boss);
+            if(boss.canBeAssigned() && boss.hasModule(mod.number)){
+                mod.potentialBosses.push(boss);
             }
         });
-        Object.values(this.modulesOrg.doneModules).forEach(mod => {
-            if(mod.potentialBosses.length){
-                if(!mod.assignBoss()){
-                    let bosses = mod.potentialBosses;
-                    let toAssign = this.bossesOrg.compareBosses(bosses, mod.number);
-                    mod.potentialBosses = [toAssign];
-                    mod.assignBoss();
+        if(mod.potentialBosses.length){
+            if(!mod.assignBoss()){
+                let bosses = mod.potentialBosses;
+                let toAssign = this.bossesOrg.compareBosses(bosses, mod.number);
+                mod.potentialBosses = [toAssign];
+                mod.assignBoss();                
                 }
             this.bossesOrg.removeModule(mod.number);
             }
-        });
+        return false;
     }
 
     assignAllBossesToModules(){
         this.prepareToAssing();
+        let res;
         while(this.bossesOrg.hasAvailableBosses() && 
         this.modulesOrg.hasModulesUnassignedBoss()){
-            this.assignBosses();
+            res = this.assignBosses();
+            if(res){
+                break;
+            }
             }
         }
 

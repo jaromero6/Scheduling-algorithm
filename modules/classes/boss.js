@@ -10,8 +10,15 @@ class Boss{
         this.canConmutateWith = Array();
     }
 
-    hasModule(numberMOdule){
-        return this.modules.includes(numberMOdule);
+    hasModule(numberModule){
+        let res = false;
+        this.modules.forEach(mod => {
+            if(mod.number == numberModule){
+                res = true;
+                return ;
+            }
+        });
+        return res;
     }
 
     canBeAssigned(){
@@ -69,7 +76,10 @@ class BossOrganizer{
         Object.values(this.bosses).forEach(boss => {
             let id = boss.idBoss;
             let name = boss.name;
-            let assignedModules = boss.assignedModules;
+            let assignedModules = Array();
+            boss.assignedModules.forEach(mod => {
+                assignedModules.push(mod.number);
+            });
             let conmutableWith = boss.canConmutateWith;
             let b = {'id': id};
             b['name'] = name;

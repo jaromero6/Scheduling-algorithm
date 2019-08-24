@@ -2,8 +2,8 @@
 
 const Organizer = require('../classes/organizer').Organizer;
 
-function createOrganizer(bosses, technicians){
-    let organizer = new Organizer();
+function createOrganizer(bosses, technicians, min){
+    let organizer = new Organizer(min);
     bosses.forEach(boss => {
         let idBoss = boss.id;
         let name = boss.name;
