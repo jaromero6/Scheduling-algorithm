@@ -78,7 +78,7 @@ class BossOrganizer{
             let name = boss.name;
             let assignedModules = Array();
             boss.assignedModules.forEach(mod => {
-                assignedModules.push(mod.number);
+                assignedModules.push(mod);
             });
             let conmutableWith = boss.canConmutateWith;
             let b = {'id': id};
